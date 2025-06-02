@@ -41,6 +41,7 @@ namespace Mediatek86.dal
                 string prenom = row[2].ToString();
                 string tel = row[3].ToString();
                 string mail = row[4].ToString();
+                string service = row[5].ToString();
 
                 personnels.Add(new Personnel(id, nom, prenom, tel, mail));
             }

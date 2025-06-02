@@ -30,7 +30,7 @@
         {
             this.tabPersoAbs = new System.Windows.Forms.TabControl();
             this.tabPerso = new System.Windows.Forms.TabPage();
-            this.comboservice = new System.Windows.Forms.ComboBox();
+            this.comboService = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.tabPersoAbs.Controls.Add(this.tabPerso);
             this.tabPersoAbs.Controls.Add(this.tabAbsence);
             this.tabPersoAbs.Location = new System.Drawing.Point(603, 13);
+            this.tabPersoAbs.Multiline = true;
             this.tabPersoAbs.Name = "tabPersoAbs";
             this.tabPersoAbs.SelectedIndex = 0;
             this.tabPersoAbs.Size = new System.Drawing.Size(258, 265);
@@ -76,7 +77,7 @@
             // 
             // tabPerso
             // 
-            this.tabPerso.Controls.Add(this.comboservice);
+            this.tabPerso.Controls.Add(this.comboService);
             this.tabPerso.Controls.Add(this.label5);
             this.tabPerso.Controls.Add(this.label4);
             this.tabPerso.Controls.Add(this.label3);
@@ -97,17 +98,17 @@
             this.tabPerso.Text = "personnel";
             this.tabPerso.UseVisualStyleBackColor = true;
             // 
-            // comboservice
+            // comboService
             // 
-            this.comboservice.AutoCompleteCustomSource.AddRange(new string[] {
+            this.comboService.AutoCompleteCustomSource.AddRange(new string[] {
             "administratif",
             "médiation culturelle",
             "prêt"});
-            this.comboservice.FormattingEnabled = true;
-            this.comboservice.Location = new System.Drawing.Point(87, 209);
-            this.comboservice.Name = "comboservice";
-            this.comboservice.Size = new System.Drawing.Size(157, 21);
-            this.comboservice.TabIndex = 13;
+            this.comboService.FormattingEnabled = true;
+            this.comboService.Location = new System.Drawing.Point(87, 209);
+            this.comboService.Name = "comboService";
+            this.comboService.Size = new System.Drawing.Size(157, 21);
+            this.comboService.TabIndex = 13;
             // 
             // label5
             // 
@@ -227,7 +228,7 @@
             this.tabAbsence.Location = new System.Drawing.Point(4, 22);
             this.tabAbsence.Name = "tabAbsence";
             this.tabAbsence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbsence.Size = new System.Drawing.Size(253, 239);
+            this.tabAbsence.Size = new System.Drawing.Size(250, 239);
             this.tabAbsence.TabIndex = 1;
             this.tabAbsence.Text = "absence";
             this.tabAbsence.UseVisualStyleBackColor = true;
@@ -364,7 +365,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 287);
+            this.ClientSize = new System.Drawing.Size(878, 302);
             this.Controls.Add(this.dgvPersonnel);
             this.Controls.Add(this.tabPersoAbs);
             this.Name = "FormMediatheque";
@@ -391,7 +392,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPrenom;
         private System.Windows.Forms.TextBox txtNom;
-        private System.Windows.Forms.ComboBox comboservice;
+        private System.Windows.Forms.ComboBox comboService;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

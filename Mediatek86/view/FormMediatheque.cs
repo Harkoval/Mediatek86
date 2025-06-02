@@ -36,7 +36,8 @@ namespace Mediatek86.view
             dgvPersonnel.Columns["Prenom"].Width = 100;
             dgvPersonnel.Columns["Mail"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvPersonnel.Columns["Tel"].Width = 150;
-
+            this.MinimumSize = new Size(885, this.Height);
+            this.MaximumSize = new Size(885, 9999);
 
         }
         private void RemplirPersonnel()

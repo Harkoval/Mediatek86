@@ -13,6 +13,11 @@ namespace Mediatek86.model
     public class Personnel
     {
         /// <summary>
+        /// Id du service du membre.
+        /// (1= Administratif, 2= médiation culturelle, 3= prêt)
+        /// </summary>
+        public string IdService { get; set; }
+        /// <summary>
         /// Nom du membre
         /// </summary>
         public string Nom { get; set; }

@@ -11,5 +11,19 @@ namespace Mediatek86.model
     /// </summary>
     public class Service
     {
+        /// <summary>
+        /// Type de service
+        /// </summary>
+        public string ServiceType { get; set; }
+        /// <summary>
+        /// Information sur le type de service de l'employer
+        /// </summary>
+        /// <param name="serviceType"></param>
+        public Service(string serviceType)
+        {
+            {
+                ServiceType = serviceType;
+            }
+        }
     }
 }
