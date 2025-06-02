@@ -38,6 +38,8 @@ namespace Mediatek86.view
             dgvPersonnel.Columns["Tel"].Width = 150;
             this.MinimumSize = new Size(885, this.Height);
             this.MaximumSize = new Size(885, 9999);
+            dgvPersonnel.Columns["IdService"].Visible = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
         }
         private void RemplirPersonnel()

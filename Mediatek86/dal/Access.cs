@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mediatek86.bddmanager;
 using MySql.Data.MySqlClient;
 using Mediatek86.model;
+using System.Windows.Forms;
 
 namespace Mediatek86.dal
 {
@@ -30,7 +31,11 @@ namespace Mediatek86.dal
         /// <returns></returns>
         public List<Personnel> GetAllPersonnel()
         {
-            string query = "SELECT * FROM personnel";
+            string query = @"SELECT p.idpersonnel, p.nom, p.prenom, p.tel, p.mail, 
+                            s.idservice, s.nom AS libelleService
+                            FROM personnel p
+                            JOIN service s ON p.idservice = s.idservice";
+
             List<object[]> records = bddManager.ReqSelect(query);
             List<Personnel> personnels = new List<Personnel>();
 
@@ -41,9 +46,10 @@ namespace Mediatek86.dal
                 string prenom = row[2].ToString();
                 string tel = row[3].ToString();
                 string mail = row[4].ToString();
-                string service = row[5].ToString();
+                int idService = Convert.ToInt32(row[5]);
+                string libelleService = row[6].ToString();
 
-                personnels.Add(new Personnel(id, nom, prenom, tel, mail));
+                personnels.Add(new Personnel(id, nom, prenom, tel, mail, idService, libelleService));
             }
 
             return personnels;

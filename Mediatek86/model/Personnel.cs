@@ -13,11 +13,6 @@ namespace Mediatek86.model
     public class Personnel
     {
         /// <summary>
-        /// Id du service du membre.
-        /// (1= Administratif, 2= médiation culturelle, 3= prêt)
-        /// </summary>
-        public string IdService { get; set; }
-        /// <summary>
         /// Nom du membre
         /// </summary>
         public string Nom { get; set; }
@@ -30,6 +25,19 @@ namespace Mediatek86.model
         /// </summary>
         public string Tel { get; set; }
         /// <summary>
+        /// Id du service du membre.
+        /// (1= Administratif, 2= médiation culturelle, 3= prêt)
+        /// </summary>
+        /// <summary>
+        /// id du service du membre
+        /// </summary>
+        public string IdService { get; set; }
+        /// <summary>
+        /// Nom du service du membre
+        /// </summary>
+        public string LibelleService { get; set; }
+
+        /// <summary>
         /// Adresse mail du membre
         /// </summary>
         public string Mail { get; set; }
@@ -40,13 +48,18 @@ namespace Mediatek86.model
         /// <param name="nom"></param>
         /// <param name="prenom"></param>
         /// <param name="tel"></param>
+        /// <param name="idservice"></param>
+        /// <param name="libelleservice"></param>
         /// <param name="mail"></param>
-        public Personnel(int id, string nom, string prenom, string tel, string mail)
+        public Personnel(int id, string nom, string prenom, string tel, string mail, int idservice, string libelleservice)
         {
             Nom = nom;
             Prenom = prenom;
             Tel = tel;
+            int IdService = idservice;
             Mail = mail;
+            LibelleService = libelleservice;
+
         }
     }
 }
