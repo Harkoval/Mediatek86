@@ -1,5 +1,8 @@
 ﻿namespace Mediatek86
 {
+    /// <summary>
+    /// Fenêtre de connexion
+    /// </summary>
     partial class FormAuthentification
     {
         /// <summary>
@@ -30,8 +33,8 @@
         {
             this.btnConnect = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtUtilisateur = new System.Windows.Forms.TextBox();
+            this.txtMdp = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -43,6 +46,7 @@
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "Se connecter";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // label1
             // 
@@ -53,19 +57,22 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Utilisateur";
             // 
-            // textBox1
+            // txtUtilisateur
             // 
-            this.textBox1.Location = new System.Drawing.Point(93, 10);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(118, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtUtilisateur.Location = new System.Drawing.Point(93, 10);
+            this.txtUtilisateur.Name = "txtUtilisateur";
+            this.txtUtilisateur.Size = new System.Drawing.Size(118, 20);
+            this.txtUtilisateur.TabIndex = 2;
+            this.txtUtilisateur.Text = "appAdmin";
             // 
-            // textBox2
+            // txtMdp
             // 
-            this.textBox2.Location = new System.Drawing.Point(93, 43);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(118, 20);
-            this.textBox2.TabIndex = 3;
+            this.txtMdp.Location = new System.Drawing.Point(93, 43);
+            this.txtMdp.Name = "txtMdp";
+            this.txtMdp.PasswordChar = '•';
+            this.txtMdp.Size = new System.Drawing.Size(118, 20);
+            this.txtMdp.TabIndex = 3;
+            this.txtMdp.Text = "SystemCall01";
             // 
             // label2
             // 
@@ -76,17 +83,17 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Mot de passe";
             // 
-            // Form1
+            // FormAuthentification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(218, 108);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtMdp);
+            this.Controls.Add(this.txtUtilisateur);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConnect);
-            this.Name = "Form1";
+            this.Name = "FormAuthentification";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -98,8 +105,8 @@
 
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtUtilisateur;
+        private System.Windows.Forms.TextBox txtMdp;
         private System.Windows.Forms.Label label2;
     }
 }

@@ -1,4 +1,4 @@
-﻿using habilitations2024.bddmanager;
+﻿using Mediatek86.bddmanager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Mediatek86.dal
     public class Connexion
     {
 
-        private static readonly string connectionString = "server=localhost;user=appuser;database=mediatek86;password=strat_Pswd999";
+        private static readonly string connectionString = "server=localhost;user=Admin01;database=mediatek86;password=strat_Pswd999";
 
             /// <summary>
             /// Accès à la base de données sous bddManager.

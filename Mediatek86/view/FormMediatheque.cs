@@ -11,8 +11,14 @@ using MySql.Data.MySqlClient;
 
 namespace Mediatek86.view
 {
+    /// <summary>
+    /// Fenêtre de gestion du personnel et des absences de la médiathèque.
+    /// </summary>
     public partial class FormMediatheque : Form
     {
+        /// <summary>
+        /// Initialisation de la fenêtre de gestion.
+        /// </summary>
         public FormMediatheque()
         {
             InitializeComponent();
