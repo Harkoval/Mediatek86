@@ -34,7 +34,8 @@ namespace Mediatek86.dal
             string query = @"SELECT p.idpersonnel, p.nom, p.prenom, p.tel, p.mail, 
                             s.idservice, s.nom AS libelleService
                             FROM personnel p
-                            JOIN service s ON p.idservice = s.idservice";
+                            JOIN service s ON p.idservice = s.idservice
+                            ORDER BY p.nom, p.prenom";
 
             List<object[]> records = bddManager.ReqSelect(query);
             List<Personnel> personnels = new List<Personnel>();
@@ -54,5 +55,49 @@ namespace Mediatek86.dal
 
             return personnels;
         }
+        /// <summary>
+        /// Permet d'accéder aux services de la base de donnée avec le SQL
+        /// </summary>
+        /// <returns></returns>
+        public List<ServiceInfo> GetAllServices()
+        {
+            string query = @"SELECT s.idservice, s.nom AS libelleService FROM service s";
+            List<object[]> records = bddManager.ReqSelect(query);
+            List<ServiceInfo> services = new List<ServiceInfo>();
+
+            foreach (object[] row in records)
+            {
+                int idService = Convert.ToInt32(row[0]);
+                string libelleService = row[1].ToString();
+
+                services.Add(new ServiceInfo(idService, libelleService));
+            }
+
+            return services;
+        }
+        /// <summary>
+        /// Fonction qui ajoute un personnel quand on appuis sur le bouton magique
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="tel"></param>
+        /// <param name="mail"></param>
+        /// <param name="idService"></param>
+        public void AjouterPersonnel(string nom, string prenom, string tel, string mail, int idService)
+        {
+            string query = @"INSERT INTO personnel (nom, prenom, tel, mail, idservice) 
+                     VALUES (@nom, @prenom, @tel, @mail, @idservice)";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+    {
+        { "@nom", nom },
+        { "@prenom", prenom },
+        { "@tel", tel },
+        { "@mail", mail },
+        { "@idservice", idService }
+    };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
     }
-} 
+}

@@ -28,9 +28,6 @@ namespace Mediatek86.model
         /// Id du service du membre.
         /// (1= Administratif, 2= médiation culturelle, 3= prêt)
         /// </summary>
-        /// <summary>
-        /// id du service du membre
-        /// </summary>
         public string IdService { get; set; }
         /// <summary>
         /// Nom du service du membre
@@ -60,6 +57,31 @@ namespace Mediatek86.model
             Mail = mail;
             LibelleService = libelleservice;
 
+        }
+    }
+    /// <summary>
+    /// Permet d'accéder aux services
+    /// </summary>
+    public class Service
+    {
+        /// <summary>
+        /// Id du service du membre.
+        /// (1= Administratif, 2= médiation culturelle, 3= prêt)
+        /// </summary>
+        public string IdService { get; set; }
+        /// <summary>
+        /// Nom du service du membre
+        /// </summary>
+        public string LibelleService { get; set; }
+        /// <summary>
+        /// Infos sur le service
+        /// </summary>
+        /// <param name="idservice"></param>
+        /// <param name="libelleservice"></param>
+        public Service(int idservice, string libelleservice)
+        {
+            int IdService = idservice;
+            LibelleService = libelleservice;
         }
     }
 }

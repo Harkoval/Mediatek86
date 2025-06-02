@@ -22,5 +22,10 @@ namespace Mediatek86.controller
         {
             return access.GetAllPersonnel();
         }
+    
+    public void AjouterPersonnel(string nom, string prenom, string tel, string mail, int idService)
+        {
+            access.AjouterPersonnel(nom, prenom, tel, mail, idService);
+        }
     }
 }

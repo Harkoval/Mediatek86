@@ -35,7 +35,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTel = new System.Windows.Forms.TextBox();
-            this.txtmail = new System.Windows.Forms.TextBox();
+            this.txtMail = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPrenom = new System.Windows.Forms.TextBox();
@@ -82,7 +82,7 @@
             this.tabPerso.Controls.Add(this.label4);
             this.tabPerso.Controls.Add(this.label3);
             this.tabPerso.Controls.Add(this.txtTel);
-            this.tabPerso.Controls.Add(this.txtmail);
+            this.tabPerso.Controls.Add(this.txtMail);
             this.tabPerso.Controls.Add(this.label2);
             this.tabPerso.Controls.Add(this.label1);
             this.tabPerso.Controls.Add(this.txtPrenom);
@@ -144,12 +144,12 @@
             this.txtTel.Size = new System.Drawing.Size(156, 20);
             this.txtTel.TabIndex = 8;
             // 
-            // txtmail
+            // txtMail
             // 
-            this.txtmail.Location = new System.Drawing.Point(87, 126);
-            this.txtmail.Name = "txtmail";
-            this.txtmail.Size = new System.Drawing.Size(157, 20);
-            this.txtmail.TabIndex = 7;
+            this.txtMail.Location = new System.Drawing.Point(87, 126);
+            this.txtMail.Name = "txtMail";
+            this.txtMail.Size = new System.Drawing.Size(157, 20);
+            this.txtMail.TabIndex = 7;
             // 
             // label2
             // 
@@ -209,6 +209,7 @@
             this.btnAjouterPerso.TabIndex = 0;
             this.btnAjouterPerso.Text = "ajouter";
             this.btnAjouterPerso.UseVisualStyleBackColor = true;
+            this.btnAjouterPerso.Click += new System.EventHandler(this.btnAjouterPerso_Click);
             // 
             // tabAbsence
             // 
@@ -397,7 +398,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtTel;
-        private System.Windows.Forms.TextBox txtmail;
+        private System.Windows.Forms.TextBox txtMail;
         private System.Windows.Forms.Button btnModifierAbs;
         private System.Windows.Forms.Button btnSupprimerAbs;
         private System.Windows.Forms.Button bntAjouterAbs;

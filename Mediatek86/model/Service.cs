@@ -9,21 +9,32 @@ namespace Mediatek86.model
     /// <summary>
     /// Représente le type de service auquel est affilié un des membres du personnel.
     /// </summary>
-    public class Service
+    public class ServiceInfo
     {
         /// <summary>
-        /// Type de service
+        /// L'id du service!
         /// </summary>
-        public string ServiceType { get; set; }
+        public int IdService { get; set; }
         /// <summary>
-        /// Information sur le type de service de l'employer
+        /// Le nom du service
         /// </summary>
-        /// <param name="serviceType"></param>
-        public Service(string serviceType)
+        public string Libelle { get; set; }
+
+        /// <summary>
+        /// Constructeur avec deux paramètres : idService et libelle
+        /// </summary>
+        public ServiceInfo(int idService, string libelle)
         {
-            {
-                ServiceType = serviceType;
-            }
+            IdService = idService;
+            Libelle = libelle;
+        }
+
+        /// <summary>
+        /// Retourne le libellé du service (utile pour les ComboBox)
+        /// </summary>
+        public override string ToString()
+        {
+            return Libelle;
         }
     }
 }
