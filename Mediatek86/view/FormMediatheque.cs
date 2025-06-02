@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Mediatek86
+namespace Mediatek86.view
 {
-    public partial class Form1 : Form
+    public partial class FormMediatheque : Form
     {
-        public Form1()
+        public FormMediatheque()
         {
             InitializeComponent();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
