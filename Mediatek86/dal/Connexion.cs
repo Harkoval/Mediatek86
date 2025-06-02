@@ -12,21 +12,17 @@ namespace Mediatek86.dal
     /// </summary>
     public class Connexion
     {
-        public class PersonnelDAL
-        {
-            private static readonly string connectionString = "server=localhost;user=appuser;database=mediatek86;password=strat_Pswd999";
 
-            private readonly BddManager bddManager;
+        private static readonly string connectionString = "server=localhost;user=appuser;database=mediatek86;password=strat_Pswd999";
 
             /// <summary>
             /// Accès à la base de données sous bddManager.
             /// </summary>
-            public PersonnelDAL()
+            public static BddManager GetBddManager()
             {
-                bddManager = BddManager.GetInstance(connectionString);
+                    return BddManager.GetInstance(connectionString);
             }
 
             // méthodes pour get/insert/update/supprimer les personnels à faire
-        }
     }
 }

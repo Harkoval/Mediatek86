@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="bddmanager\BddManager.cs" />
     <Compile Include="dal\Connexion.cs" />
+    <Compile Include="dal\PersonnelDAL.cs" />
     <Compile Include="model\Absence.cs" />
     <Compile Include="model\Motif.cs" />
     <Compile Include="model\Personnel.cs" />
