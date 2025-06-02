@@ -58,9 +58,10 @@ namespace Mediatek86
             Authentification auth = new Authentification();
             if (auth.Connexion(login, pwd))
             {
-                MessageBox.Show("Connexion réussie !");
+                
                 this.Hide();
                 FormMediatheque form = new FormMediatheque();
+                
                 form.ShowDialog();
                 this.Close();
             }

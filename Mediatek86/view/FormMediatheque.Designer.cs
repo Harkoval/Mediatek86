@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listAffichage = new System.Windows.Forms.ListBox();
             this.tabPersoAbs = new System.Windows.Forms.TabControl();
             this.tabPerso = new System.Windows.Forms.TabPage();
             this.comboservice = new System.Windows.Forms.ComboBox();
@@ -58,24 +57,18 @@
             this.btnModifierAbs = new System.Windows.Forms.Button();
             this.btnSupprimerAbs = new System.Windows.Forms.Button();
             this.bntAjouterAbs = new System.Windows.Forms.Button();
+            this.dgvPersonnel = new System.Windows.Forms.DataGridView();
             this.tabPersoAbs.SuspendLayout();
             this.tabPerso.SuspendLayout();
             this.tabAbsence.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPersonnel)).BeginInit();
             this.SuspendLayout();
-            // 
-            // listAffichage
-            // 
-            this.listAffichage.FormattingEnabled = true;
-            this.listAffichage.Location = new System.Drawing.Point(13, 13);
-            this.listAffichage.Name = "listAffichage";
-            this.listAffichage.Size = new System.Drawing.Size(463, 446);
-            this.listAffichage.TabIndex = 0;
             // 
             // tabPersoAbs
             // 
             this.tabPersoAbs.Controls.Add(this.tabPerso);
             this.tabPersoAbs.Controls.Add(this.tabAbsence);
-            this.tabPersoAbs.Location = new System.Drawing.Point(482, 13);
+            this.tabPersoAbs.Location = new System.Drawing.Point(603, 13);
             this.tabPersoAbs.Name = "tabPersoAbs";
             this.tabPersoAbs.SelectedIndex = 0;
             this.tabPersoAbs.Size = new System.Drawing.Size(258, 265);
@@ -234,7 +227,7 @@
             this.tabAbsence.Location = new System.Drawing.Point(4, 22);
             this.tabAbsence.Name = "tabAbsence";
             this.tabAbsence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbsence.Size = new System.Drawing.Size(250, 239);
+            this.tabAbsence.Size = new System.Drawing.Size(253, 239);
             this.tabAbsence.TabIndex = 1;
             this.tabAbsence.Text = "absence";
             this.tabAbsence.UseVisualStyleBackColor = true;
@@ -357,13 +350,23 @@
             this.bntAjouterAbs.Text = "ajouter";
             this.bntAjouterAbs.UseVisualStyleBackColor = true;
             // 
+            // dgvPersonnel
+            // 
+            this.dgvPersonnel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPersonnel.Location = new System.Drawing.Point(12, 13);
+            this.dgvPersonnel.Name = "dgvPersonnel";
+            this.dgvPersonnel.ReadOnly = true;
+            this.dgvPersonnel.Size = new System.Drawing.Size(585, 261);
+            this.dgvPersonnel.StandardTab = true;
+            this.dgvPersonnel.TabIndex = 2;
+            // 
             // FormMediatheque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 467);
+            this.ClientSize = new System.Drawing.Size(865, 287);
+            this.Controls.Add(this.dgvPersonnel);
             this.Controls.Add(this.tabPersoAbs);
-            this.Controls.Add(this.listAffichage);
             this.Name = "FormMediatheque";
             this.Text = "FormMediatheque";
             this.Load += new System.EventHandler(this.FormMediatheque_Load);
@@ -372,13 +375,12 @@
             this.tabPerso.PerformLayout();
             this.tabAbsence.ResumeLayout(false);
             this.tabAbsence.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPersonnel)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listAffichage;
         private System.Windows.Forms.TabControl tabPersoAbs;
         private System.Windows.Forms.TabPage tabPerso;
         private System.Windows.Forms.TabPage tabAbsence;
@@ -408,5 +410,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateFin;
         private System.Windows.Forms.ComboBox comboMotif;
+        private System.Windows.Forms.DataGridView dgvPersonnel;
     }
 }
