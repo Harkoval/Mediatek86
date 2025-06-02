@@ -23,4 +23,4 @@ namespace Mediatek86.dal
         // Ici viendront les méthodes :
         // GetAllPersonnels(), AddPersonnel(), UpdatePersonnel(), etc.
     }
-}
+} 
