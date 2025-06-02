@@ -86,10 +86,28 @@ namespace Mediatek86.dal
         public void AjouterPersonnel(string nom, string prenom, string tel, string mail, int idService)
         {
             string query = @"INSERT INTO personnel (nom, prenom, tel, mail, idservice) 
-                     VALUES (@nom, @prenom, @tel, @mail, @idservice)";
+                                VALUES (@nom, @prenom, @tel, @mail, @idservice)";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+            { "@nom", nom },
+            { "@prenom", prenom },
+            { "@tel", tel },
+            { "@mail", mail },
+            { "@idservice", idService }
+            };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
+        public void ModifierPersonnel(int id, string nom, string prenom, string tel, string mail, int idService)
+        {
+            string query = @"UPDATE personnel 
+                 SET nom = @nom, prenom = @prenom, tel = @tel, mail = @mail, idservice = @idservice 
+                 WHERE idpersonnel = @id";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
     {
+        { "@id", id },
         { "@nom", nom },
         { "@prenom", prenom },
         { "@tel", tel },

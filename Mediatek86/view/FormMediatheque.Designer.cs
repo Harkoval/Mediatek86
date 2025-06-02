@@ -200,6 +200,7 @@
             this.btnModifierPerso.TabIndex = 1;
             this.btnModifierPerso.Text = "modifier";
             this.btnModifierPerso.UseVisualStyleBackColor = true;
+            this.btnModifierPerso.Click += new System.EventHandler(this.btnModifierPerso_Click);
             // 
             // btnAjouterPerso
             // 
@@ -361,6 +362,8 @@
             this.dgvPersonnel.Size = new System.Drawing.Size(585, 261);
             this.dgvPersonnel.StandardTab = true;
             this.dgvPersonnel.TabIndex = 2;
+            this.dgvPersonnel.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonnel_CellClick);
+            this.dgvPersonnel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonnel_CellContentClick);
             // 
             // FormMediatheque
             // 

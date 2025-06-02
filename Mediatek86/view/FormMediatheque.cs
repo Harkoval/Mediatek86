@@ -29,26 +29,13 @@ namespace Mediatek86.view
         {
             InitializeComponent();
             controller = new PersonnelController();
-            tabPersoAbs.SelectedIndex = 0;
-            dgvPersonnel.ReadOnly = true;
-            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvPersonnel.MultiSelect = false;
-            RemplirPersonnel();
-            dgvPersonnel.AutoGenerateColumns = true;
-            dgvPersonnel.Columns["Nom"].Width = 70;
-            dgvPersonnel.Columns["Prenom"].Width = 75;
-            dgvPersonnel.Columns["Mail"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvPersonnel.Columns["Tel"].Width = 100;
-            this.MinimumSize = new Size(885, this.Height);
-            this.MaximumSize = new Size(885, 9999);
-            dgvPersonnel.Columns["IdService"].Visible = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            Raffraichir();
         }
         private void Raffraichir()
         {
             tabPersoAbs.SelectedIndex = 0;
             dgvPersonnel.ReadOnly = true;
-            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPersonnel.MultiSelect = false;
             RemplirPersonnel();
             dgvPersonnel.AutoGenerateColumns = true;
@@ -60,6 +47,7 @@ namespace Mediatek86.view
             this.MaximumSize = new Size(885, 9999);
             dgvPersonnel.Columns["IdService"].Visible = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
         }
         private void RemplirPersonnel()
         {
@@ -72,12 +60,14 @@ namespace Mediatek86.view
         }
         private void FormMediatheque_Load(object sender, EventArgs e)
         {
+            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Access access = new Access(); // ou ton contrôleur
             List<ServiceInfo> services = access.GetAllServices();
 
             comboService.DataSource = services;
             comboService.DisplayMember = "Libelle";
             comboService.ValueMember = "IdService";
+
             /* int selectedIdService = (int)comboService.SelectedValue;/// Sert à récupérer la valeur selectionnées*/
         }
 
@@ -95,7 +85,7 @@ namespace Mediatek86.view
                 {
                     controller.AjouterPersonnel(nom, prenom, tel, mail, idService);
                     MessageBox.Show("Personnel ajouté avec succès !");
-                    RemplirPersonnel(); // Pour rafraîchir la liste dans le DataGridView
+                    RemplirPersonnel();
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +100,90 @@ namespace Mediatek86.view
                 MessageBox.Show("Nom et prénom sont obligatoires.");
             }
             Raffraichir();
+            txtNom.Text = "";
+            txtPrenom.Text = "";
+            txtTel.Text = "";
+            txtMail.Text = "";
+        }
+
+        private void btnModifierPerso_Click(object sender, EventArgs e)
+        {
+            // Vérifie que le nom et prénom ne sont pas vides
+            if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text))
+            {
+                MessageBox.Show("Le nom et le prénom sont obligatoires.");
+                return;
+            }
+
+            try
+            {
+                // Vérifie qu'au moins une ligne est sélectionnée
+                if (dgvPersonnel.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Veuillez sélectionner un personnel.");
+                    return;
+                }
+
+                DataGridViewRow row = dgvPersonnel.SelectedRows[0];
+
+                if (row.Cells["Id"].Value == null || !int.TryParse(row.Cells["Id"].Value.ToString(), out int id))
+                {
+                    MessageBox.Show("ID invalide.");
+                    return;
+                }
+
+                string nom = txtNom.Text;
+                string prenom = txtPrenom.Text;
+                string tel = txtTel.Text;
+                string mail = txtMail.Text;
+                int idService = (int)comboService.SelectedValue;
+
+                controller.ModifierPersonnel(id, nom, prenom, tel, mail, idService);
+                MessageBox.Show("Modification réussie !");
+                Raffraichir();
+
+                // Réinitialise les champs texte
+                txtNom.Text = "";
+                txtPrenom.Text = "";
+                txtTel.Text = "";
+                txtMail.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la modification : " + ex.Message);
+            }
+        }
+
+        private void dgvPersonnel_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void dgvPersonnel_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvPersonnel.CurrentRow != null)
+            {
+                DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
+
+                txtNom.Text = selectedRow.Cells["Nom"].Value.ToString();
+                txtPrenom.Text = selectedRow.Cells["Prenom"].Value.ToString();
+                txtTel.Text = selectedRow.Cells["Tel"].Value.ToString();
+                txtMail.Text = selectedRow.Cells["Mail"].Value.ToString();
+
+                string serviceNom = selectedRow.Cells["LibelleService"].Value.ToString();
+
+                // Parcours des items pour sélectionner celui dont le texte correspond
+                for (int i = 0; i < comboService.Items.Count; i++)
+                {
+                    var item = (ServiceInfo)comboService.Items[i];
+                    if (item.Libelle == serviceNom)
+                    {
+                        comboService.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
         }
     }
 }

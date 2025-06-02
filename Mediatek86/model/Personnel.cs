@@ -12,6 +12,7 @@ namespace Mediatek86.model
     /// </summary>
     public class Personnel
     {
+        public int Id { get; set; }
         /// <summary>
         /// Nom du membre
         /// </summary>
@@ -50,13 +51,13 @@ namespace Mediatek86.model
         /// <param name="mail"></param>
         public Personnel(int id, string nom, string prenom, string tel, string mail, int idservice, string libelleservice)
         {
+            Id = id;
             Nom = nom;
             Prenom = prenom;
             Tel = tel;
-            int IdService = idservice;
+            IdService = idservice.ToString(); // si tu veux rester en string
             Mail = mail;
             LibelleService = libelleservice;
-
         }
     }
     /// <summary>
