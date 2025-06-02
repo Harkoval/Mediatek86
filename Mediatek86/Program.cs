@@ -6,7 +6,15 @@ using System.Windows.Forms;
 
 namespace Mediatek86
 {
-    internal static class Program
+    /// <summary>
+    /// Application de gestion du personnel d'une médiathèque
+    /// </summary>
+    internal class NamespaceDoc
+    {
+
+    }
+
+    static class Program
     {
         /// <summary>
         /// Point d'entrée principal de l'application.

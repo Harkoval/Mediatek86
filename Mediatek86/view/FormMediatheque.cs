@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Mediatek86.view
 {
@@ -17,7 +18,7 @@ namespace Mediatek86.view
             InitializeComponent();
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
+        private void FormMediatheque_Load(object sender, EventArgs e)
         {
 
         }

@@ -103,7 +103,6 @@
             this.tabPerso.TabIndex = 0;
             this.tabPerso.Text = "personnel";
             this.tabPerso.UseVisualStyleBackColor = true;
-            this.tabPerso.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // tabAbsence
             // 
@@ -367,6 +366,7 @@
             this.Controls.Add(this.listAffichage);
             this.Name = "FormMediatheque";
             this.Text = "FormMediatheque";
+            this.Load += new System.EventHandler(this.FormMediatheque_Load);
             this.tabPersoAbs.ResumeLayout(false);
             this.tabPerso.ResumeLayout(false);
             this.tabPerso.PerformLayout();
