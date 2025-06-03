@@ -23,7 +23,8 @@ namespace Mediatek86.view
     {
 
         /////////////////////////////////////////////////  INITIALISATION DE LA FENÊTRE  ////////////////////////////////////////////////
-        string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné.
+        string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné dans Personnel
+        string boutonSelectionAbs = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné dans Absent
         string tabSelection = "Personnel";
         private readonly PersonnelController controller;
         private readonly MotifController motifController;
@@ -350,11 +351,15 @@ namespace Mediatek86.view
         ///
         private void FormMediatheque_MouseClick(object sender, MouseEventArgs e)
         {
-            if (txtNom.Enabled == false)
+            if (tabSelection == "Personnel")
             {
-                btnValider.Enabled = false;
+                if (txtNom.Enabled == false)
+                {
+                    btnValider.Enabled = false;
+                }
+                Surligner();
             }
-            Surligner();
+            
         }
 
         private void dgvPersonnel_MouseClick(object sender, MouseEventArgs e)
@@ -385,6 +390,10 @@ namespace Mediatek86.view
                 }
                 Surligner();
             }
+            else
+            {
+                SelectionCellule();
+            }
         }
 
         private void dgvPersonnel_Click(object sender, EventArgs e)
@@ -396,22 +405,45 @@ namespace Mediatek86.view
         /// </summary>
         public void Surligner()
         {
-            if (boutonSelection == "ajouter")
+            if (tabSelection == "Personnel")
             {
-                btnAjouterPerso.Focus();
-                ActiverBoutons();
+                if (boutonSelection == "ajouter")
+                {
+                    btnAjouterPerso.Focus();
+                    ActiverBoutons();
+                }
+                else if (boutonSelection == "modifier")
+                {
+                    btnModifierPerso.Focus();
+                    ActiverBoutons();
+                }
+                else if (boutonSelection == "supprimer")
+                {
+                    btnSupprimerPerso.Focus();
+                    DesactiverBoutons();
+                    btnValider.Enabled = true;
+                }
             }
-            else if (boutonSelection == "modifier")
+            else
             {
-                btnModifierPerso.Focus();
-                ActiverBoutons();
+                if (boutonSelectionAbs == "ajouter")
+                {
+                    bntAjouterAbs.Focus();
+                    ActiverBoutonsAbs();
+                }
+                else if (boutonSelectionAbs == "modifier")
+                {
+                    btnModifierAbs.Focus();
+                    ActiverBoutonsAbs();
+                }
+                else if (boutonSelectionAbs == "supprimer")
+                {
+                    btnSupprimerAbs.Focus();
+                    DesactiverBoutonsAbs();
+                    btnValiderAbs.Enabled = true;
+                }
             }
-            else if (boutonSelection == "supprimer")
-            {
-                btnSupprimerPerso.Focus();
-                DesactiverBoutons();
-                btnValider.Enabled = true;
-            }
+            
         }
 
         private void btnSupprimerPerso_Click(object sender, EventArgs e)
@@ -464,10 +496,10 @@ namespace Mediatek86.view
 
             List<Motif> motifs = motifController.GetAllMotifs();
 
-            comboMotif.DataSource = null;
-            comboMotif.DisplayMember = "Libelle";  // Ce qui est affiché
-            comboMotif.ValueMember = "IdMotif";    // Ce que tu récupères
-            comboMotif.DataSource = motifs;
+            cbMotif.DataSource = null;
+            cbMotif.DisplayMember = "Libelle";  // Ce qui est affiché
+            cbMotif.ValueMember = "IdMotif";    // Ce que tu récupères
+            cbMotif.DataSource = motifs;
         }
 
         private void tabPersoAbs_SelectedIndexChanged(object sender, EventArgs e)
@@ -494,6 +526,155 @@ namespace Mediatek86.view
                 RemplirPersonnel();
                 Raffraichir();
             }
+        }
+
+
+
+
+
+        /// <summary>
+        /// Quand une des cellules du tableau est selectionnée
+        /// </summary>
+        public void SelectionCellule()
+        {
+            if (dgvPersonnel.CurrentRow != null)
+            {
+                DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
+
+                string nom = selectedRow.Cells["Nom"].Value.ToString();
+                DateTime DateDebut = Convert.ToDateTime(selectedRow.Cells[1].Value);
+                DateTime? DateFin = selectedRow.Cells[2].Value == DBNull.Value
+                    ? (DateTime?)null
+                    : Convert.ToDateTime(selectedRow.Cells[2].Value);
+                string motif = selectedRow.Cells["Motif"].Value.ToString();
+
+                foreach (Motif item in cbMotif.Items)
+                {
+                    if (item.Libelle == motif)
+                    {
+                        cbMotif.SelectedItem = item;
+                        break;
+                    }
+                }
+
+                foreach (Personnel p in cbNomAbsent.Items)
+                {
+                    if (p.Nom == nom)
+                    {
+                        cbNomAbsent.SelectedItem = p;
+                        break;
+                    }
+                }
+
+                
+                DateTime? valeurFin = selectedRow.Cells[2].Value == DBNull.Value
+                ? (DateTime?)null
+                : Convert.ToDateTime(selectedRow.Cells[2].Value);
+
+
+                dateDebut.Value = DateDebut;
+                if (valeurFin != null && valeurFin.Value >= dateFin.MinDate)
+                {
+                    dateFin.Value = valeurFin.Value; // ici dateFin = ton contrôle visuel
+                    checkNonDef.Checked = false;
+                }
+                else
+                {
+                    dateFin.Value = DateTime.Now;
+                    checkNonDef.Checked = true;
+                }
+
+            }
+
+            Surligner();
+        }
+
+
+        private void ActiverBoutonsAbs()
+        {
+            cbNomAbsent.Enabled = true;
+            dateDebut.Enabled = true;
+            dateFin.Enabled = true;
+            cbMotif.Enabled = true;
+        }
+        private void DesactiverBoutonsAbs()
+        {
+            cbNomAbsent.Enabled = false;
+            dateDebut.Enabled = false;
+            dateFin.Enabled = false;
+            cbMotif.Enabled = false;
+        }
+        private void bntAjouterAbs_Click(object sender, EventArgs e)
+        {
+            boutonSelectionAbs = "ajouter";
+            btnAjouterPerso.Focus();
+            ActiverBoutonsAbs();
+        }
+
+        private void btnModifierAbs_Click(object sender, EventArgs e)
+        {
+            boutonSelectionAbs = "modifier";
+            btnModifierAbs.Focus();
+            ActiverBoutonsAbs();
+        }
+
+        private void btnSupprimerAbs_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
+
+            string nom = selectedRow.Cells["Nom"].Value.ToString();
+            DateTime DateDebut = Convert.ToDateTime(selectedRow.Cells[1].Value);
+            DateTime? DateFin = selectedRow.Cells[2].Value == DBNull.Value
+                ? (DateTime?)null
+                : Convert.ToDateTime(selectedRow.Cells[2].Value);
+            string motif = selectedRow.Cells["Motif"].Value.ToString();
+
+            foreach (Motif item in cbMotif.Items)
+            {
+                if (item.Libelle == motif)
+                {
+                    cbMotif.SelectedItem = item;
+                    break;
+                }
+            }
+
+            foreach (Personnel p in cbNomAbsent.Items)
+            {
+                if (p.Nom == nom)
+                {
+                    cbNomAbsent.SelectedItem = p;
+                    break;
+                }
+            }
+
+
+            DateTime? valeurFin = selectedRow.Cells[2].Value == DBNull.Value
+            ? (DateTime?)null
+            : Convert.ToDateTime(selectedRow.Cells[2].Value);
+
+
+            dateDebut.Value = DateDebut;
+            if (valeurFin != null && valeurFin.Value >= dateFin.MinDate)
+            {
+                dateFin.Value = valeurFin.Value; // ici dateFin = ton contrôle visuel
+                checkNonDef.Checked = false;
+            }
+            else
+            {
+                dateFin.Value = DateTime.Now;
+                checkNonDef.Checked = true;
+            }
+
+            boutonSelectionAbs = "supprimer";
+            DesactiverBoutonsAbs();
+            btnValiderAbs.Enabled = true;
+
+            if (dgvPersonnel.CurrentRow == null)
+            {
+                MessageBox.Show("Veuillez selectionner une ligne.");
+                return;
+            }
+            
         }
     }
 }

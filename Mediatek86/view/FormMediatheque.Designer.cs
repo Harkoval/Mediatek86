@@ -45,7 +45,7 @@
             this.btnModifierPerso = new System.Windows.Forms.Button();
             this.btnAjouterPerso = new System.Windows.Forms.Button();
             this.tabAbsence = new System.Windows.Forms.TabPage();
-            this.comboMotif = new System.Windows.Forms.ComboBox();
+            this.cbMotif = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.checkNonDef = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@
             this.btnSupprimerAbs = new System.Windows.Forms.Button();
             this.bntAjouterAbs = new System.Windows.Forms.Button();
             this.dgvPersonnel = new System.Windows.Forms.DataGridView();
+            this.btnValiderAbs = new System.Windows.Forms.Button();
             this.tabPersoAbs.SuspendLayout();
             this.tabPerso.SuspendLayout();
             this.tabAbsence.SuspendLayout();
@@ -234,7 +235,8 @@
             // 
             // tabAbsence
             // 
-            this.tabAbsence.Controls.Add(this.comboMotif);
+            this.tabAbsence.Controls.Add(this.btnValiderAbs);
+            this.tabAbsence.Controls.Add(this.cbMotif);
             this.tabAbsence.Controls.Add(this.label10);
             this.tabAbsence.Controls.Add(this.checkNonDef);
             this.tabAbsence.Controls.Add(this.label9);
@@ -255,18 +257,18 @@
             this.tabAbsence.Text = "absence";
             this.tabAbsence.UseVisualStyleBackColor = true;
             // 
-            // comboMotif
+            // cbMotif
             // 
-            this.comboMotif.AutoCompleteCustomSource.AddRange(new string[] {
+            this.cbMotif.AutoCompleteCustomSource.AddRange(new string[] {
             "vacances",
             "maladie",
             "motif familial",
             "congé parental"});
-            this.comboMotif.FormattingEnabled = true;
-            this.comboMotif.Location = new System.Drawing.Point(9, 191);
-            this.comboMotif.Name = "comboMotif";
-            this.comboMotif.Size = new System.Drawing.Size(181, 21);
-            this.comboMotif.TabIndex = 12;
+            this.cbMotif.FormattingEnabled = true;
+            this.cbMotif.Location = new System.Drawing.Point(9, 191);
+            this.cbMotif.Name = "cbMotif";
+            this.cbMotif.Size = new System.Drawing.Size(181, 21);
+            this.cbMotif.TabIndex = 12;
             // 
             // label10
             // 
@@ -354,6 +356,7 @@
             this.btnModifierAbs.TabIndex = 2;
             this.btnModifierAbs.Text = "modifier";
             this.btnModifierAbs.UseVisualStyleBackColor = true;
+            this.btnModifierAbs.Click += new System.EventHandler(this.btnModifierAbs_Click);
             // 
             // btnSupprimerAbs
             // 
@@ -363,6 +366,7 @@
             this.btnSupprimerAbs.TabIndex = 1;
             this.btnSupprimerAbs.Text = "supprimer";
             this.btnSupprimerAbs.UseVisualStyleBackColor = true;
+            this.btnSupprimerAbs.Click += new System.EventHandler(this.btnSupprimerAbs_Click);
             // 
             // bntAjouterAbs
             // 
@@ -372,6 +376,7 @@
             this.bntAjouterAbs.TabIndex = 0;
             this.bntAjouterAbs.Text = "ajouter";
             this.bntAjouterAbs.UseVisualStyleBackColor = true;
+            this.bntAjouterAbs.Click += new System.EventHandler(this.bntAjouterAbs_Click);
             // 
             // dgvPersonnel
             // 
@@ -386,6 +391,15 @@
             this.dgvPersonnel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonnel_CellContentClick);
             this.dgvPersonnel.Click += new System.EventHandler(this.dgvPersonnel_Click);
             this.dgvPersonnel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPersonnel_MouseClick);
+            // 
+            // btnValiderAbs
+            // 
+            this.btnValiderAbs.Location = new System.Drawing.Point(169, 246);
+            this.btnValiderAbs.Name = "btnValiderAbs";
+            this.btnValiderAbs.Size = new System.Drawing.Size(75, 23);
+            this.btnValiderAbs.TabIndex = 13;
+            this.btnValiderAbs.Text = "valider";
+            this.btnValiderAbs.UseVisualStyleBackColor = true;
             // 
             // FormMediatheque
             // 
@@ -437,8 +451,9 @@
         private System.Windows.Forms.CheckBox checkNonDef;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateFin;
-        private System.Windows.Forms.ComboBox comboMotif;
+        private System.Windows.Forms.ComboBox cbMotif;
         private System.Windows.Forms.DataGridView dgvPersonnel;
         private System.Windows.Forms.Button btnValider;
+        private System.Windows.Forms.Button btnValiderAbs;
     }
 }
