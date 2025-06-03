@@ -400,6 +400,7 @@
             this.btnValiderAbs.TabIndex = 13;
             this.btnValiderAbs.Text = "valider";
             this.btnValiderAbs.UseVisualStyleBackColor = true;
+            this.btnValiderAbs.Click += new System.EventHandler(this.btnValiderAbs_Click);
             // 
             // FormMediatheque
             // 

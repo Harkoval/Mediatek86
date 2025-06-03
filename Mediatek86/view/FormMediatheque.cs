@@ -676,5 +676,48 @@ namespace Mediatek86.view
             }
             
         }
+
+        private void btnValiderAbs_Click(object sender, EventArgs e)
+        {
+            if (boutonSelectionAbs == "ajouter")
+            {
+                if (cbNomAbsent.SelectedItem is Personnel personnel && cbMotif.SelectedItem is Motif motif)
+                {
+                    DateTime dateDebutAbs = dateDebut.Value;
+                    DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
+                    int idMotif = motif.IdMotif;
+
+                    try
+                    {
+                        absenceController.AjouterAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
+                        MessageBox.Show("Absence ajoutée !");
+                        RemplirAbsences(); // méthode pour mettre à jour ton DGV
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erreur : " + ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner un nom et un motif.");
+                }
+            }
+            else if (boutonSelectionAbs == "modifier")
+            {
+
+            }
+            else if (boutonSelectionAbs == "")
+            {
+                if (cbNomAbsent.Enabled == false)
+                {
+                    btnValiderAbs.Enabled = false;
+                }
+            }
+            else
+            {
+
+            }
+        }
     }
 }

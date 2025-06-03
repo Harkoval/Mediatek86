@@ -21,5 +21,11 @@ namespace Mediatek86.controller
         {
             return access.GetAllAbsences();
         }
+
+        public void AjouterAbsence(int idPersonnel, DateTime dateDebut, DateTime? dateFin, int idMotif)
+        {
+            Access access = new Access();
+            access.AjouterAbsence(idPersonnel, dateDebut, dateFin, idMotif);
+        }
     }
 }

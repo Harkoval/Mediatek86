@@ -226,5 +226,29 @@ namespace Mediatek86.dal
             return motifs;
         }
 
+
+        /// <summary>
+        /// Requête SQL pour ajouter une absence
+        /// </summary>
+        /// <param name="idPersonnel"></param>
+        /// <param name="dateDebut"></param>
+        /// <param name="dateFin"></param>
+        /// <param name="idMotif"></param>
+        public void AjouterAbsence(int idPersonnel, DateTime dateDebut, DateTime? dateFin, int idMotif)
+        {
+            string query = @"INSERT INTO absence (idpersonnel, datedebut, datefin, idmotif)
+                     VALUES (@idpersonnel, @datedebut, @datefin, @idmotif)";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+    {
+        { "@idpersonnel", idPersonnel },
+        { "@datedebut", dateDebut },
+        { "@datefin", dateFin.HasValue ? dateFin.Value : (object)DBNull.Value },
+        { "@idmotif", idMotif }
+    };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
+
     }
 }
