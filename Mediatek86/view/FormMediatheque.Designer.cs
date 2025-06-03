@@ -75,6 +75,7 @@
             this.tabPersoAbs.SelectedIndex = 0;
             this.tabPersoAbs.Size = new System.Drawing.Size(258, 301);
             this.tabPersoAbs.TabIndex = 1;
+            this.tabPersoAbs.SelectedIndexChanged += new System.EventHandler(this.tabPersoAbs_SelectedIndexChanged);
             // 
             // tabPerso
             // 

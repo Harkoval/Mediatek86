@@ -76,7 +76,7 @@ namespace Mediatek86.dal
             return services;
         }
         /// <summary>
-        /// Requête SQL qui ajoute un personnel quand on appuis sur le bouton magique
+        /// Requête SQL qui ajoute un personnel quand on appuis sur le bouton ajout
         /// </summary>
         /// <param name="nom"></param>
         /// <param name="prenom"></param>
@@ -152,5 +152,56 @@ namespace Mediatek86.dal
 
             bddManager.ReqUpdate(query, parameters);
         }
+
+
+        /// <summary>
+        /// Fonction qui vérifie l'existence d'un membre du personnel pour éviter les suppressions malencontreuses.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool ExistePersonnel(int id)
+        {
+            string query = "SELECT COUNT(*) FROM personnel WHERE idpersonnel = @id";
+            Dictionary<string, object> parameters = new Dictionary<string, object> { { "@id", id } };
+
+            List<object[]> result = bddManager.ReqSelect(query, parameters);
+
+            if (result.Count == 0 || result[0].Length == 0)
+            {
+                return false;
+            }
+
+            return Convert.ToInt32(result[0][0]) > 0;
+        }
+
+        /// <summary>
+        /// Permet d'accéder aux absences de la base de donnée avec le SQL
+        /// </summary>
+        /// <returns></returns>
+        public List<Absence> GetAllAbsences()
+        {
+            string query = @"
+        SELECT p.nom, a.datedebut, a.datefin, m.libelle
+        FROM absence a
+        JOIN personnel p ON p.idpersonnel = a.idpersonnel
+        JOIN motif m ON m.idmotif = a.idmotif
+        ORDER BY p.nom;
+    ";
+
+            List<object[]> records = bddManager.ReqSelect(query);
+            List<Absence> absences = new List<Absence>();
+
+            foreach (object[] row in records)
+            {
+                string nom = row[0].ToString();
+                DateTime dateDebut = Convert.ToDateTime(row[1]);
+                DateTime? dateFin = row[2] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row[2]);
+                string motif = row[3].ToString();
+                absences.Add(new Absence(nom, dateDebut, dateFin, motif));
+            }
+
+            return absences;
+        }
+
     }
 }

@@ -36,7 +36,7 @@ namespace Mediatek86.model
         /// <summary>
         /// Nom du service du membre
         /// </summary>
-        public string LibelleService { get; set; }
+        public string Service { get; set; }
 
         /// <summary>
         /// Adresse mail du membre
@@ -50,9 +50,9 @@ namespace Mediatek86.model
         /// <param name="prenom"></param>
         /// <param name="tel"></param>
         /// <param name="idservice"></param>
-        /// <param name="libelleservice"></param>
+        /// <param name="service"></param>
         /// <param name="mail"></param>
-        public Personnel(int id, string nom, string prenom, string tel, string mail, int idservice, string libelleservice)
+        public Personnel(int id, string nom, string prenom, string tel, string mail, int idservice, string service)
         {
             Id = id;
             Nom = nom;
@@ -60,7 +60,7 @@ namespace Mediatek86.model
             Tel = tel;
             IdService = idservice.ToString(); // si tu veux rester en string
             Mail = mail;
-            LibelleService = libelleservice;
+            Service = service;
         }
     }
     /// <summary>

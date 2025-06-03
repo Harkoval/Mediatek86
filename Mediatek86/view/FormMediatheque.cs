@@ -24,6 +24,7 @@ namespace Mediatek86.view
 
         /////////////////////////////////////////////////  INITIALISATION DE LA FENÊTRE  ////////////////////////////////////////////////
         string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné.
+        string tabSelection = "Personnel";
         private readonly PersonnelController controller;
         /// <summary>
         /// Initialisation de la fenêtre de gestion.
@@ -63,6 +64,15 @@ namespace Mediatek86.view
             txtPrenom.Enabled = false;
             comboService.Enabled = false;
             btnValider.Enabled = false;
+            /*
+            DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
+            txtNom.Text = selectedRow.Cells["Nom"].Value.ToString();
+            txtPrenom.Text = selectedRow.Cells["Prenom"].Value.ToString();
+            txtTel.Text = selectedRow.Cells["Tel"].Value.ToString();
+            txtMail.Text = selectedRow.Cells["Mail"].Value.ToString();
+            string serviceNom = selectedRow.Cells["Service"].Value.ToString();
+            */
+            dgvPersonnel.Rows[0].Selected = true;
             Raffraichir();
 
         }
@@ -102,39 +112,7 @@ namespace Mediatek86.view
             txtTel.Enabled = true;
             txtPrenom.Enabled = true;
             comboService.Enabled = true;
-            /*string nom = txtNom.Text;
-            string prenom = txtPrenom.Text;
-            string tel = txtTel.Text;
-            string mail = txtMail.Text;
-            int idService = (int)comboService.SelectedValue;
-
-            if (!string.IsNullOrWhiteSpace(nom) && !string.IsNullOrWhiteSpace(prenom))
-            {
-                try
-                {
-                    controller.AjouterPersonnel(nom, prenom, tel, mail, idService);
-                    MessageBox.Show("Personnel ajouté avec succès !");
-                    RemplirPersonnel();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erreur lors de l'ajout : " + ex.Message);
-                    dgvPersonnel.Columns.Clear();
-                    dgvPersonnel.DataSource = null;
-                    dgvPersonnel.AutoGenerateColumns = true;
-                }
-            
-            }
-            else
-            {
-                MessageBox.Show("Nom et prénom sont obligatoires.");
-            }
-            Raffraichir();
-            txtNom.Text = "";
-            txtPrenom.Text = "";
-            txtTel.Text = "";
-            txtMail.Text = "";
-            */
+         
         }
         private void ActiverBoutons()
         {
@@ -209,82 +187,41 @@ namespace Mediatek86.view
             VerifierChampsEtActiverBoutons();
         }
 
+
         private void btnValider_Click(object sender, EventArgs e)
         {
             if (boutonSelection == "ajouter")
             {
-                string nom = txtNom.Text;
-                string prenom = txtPrenom.Text;
-                string tel = txtTel.Text;
-                string mail = txtMail.Text;
-                int idService = (int)comboService.SelectedValue;
-
-                if (!string.IsNullOrWhiteSpace(nom) && !string.IsNullOrWhiteSpace(prenom))
+                if (MessageBox.Show("Ajouter ce personnel?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    try
-                    {
-                        controller.AjouterPersonnel(nom, prenom, tel, mail, idService);
-                        MessageBox.Show("Personnel ajouté avec succès !");
-                        RemplirPersonnel();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Erreur lors de l'ajout : " + ex.Message);
-                        dgvPersonnel.Columns.Clear();
-                        dgvPersonnel.DataSource = null;
-                        dgvPersonnel.AutoGenerateColumns = true;
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("Nom et prénom sont obligatoires.");
-                }
-                Raffraichir();
-                txtNom.Text = "";
-                txtPrenom.Text = "";
-                txtTel.Text = "";
-                txtMail.Text = "";
-                boutonSelection = "";
-                btnValider.Enabled = false;
-            }
-            else if (boutonSelection == "modifier")
-            {
-                // Vérifie que le nom et prénom ne sont pas vides - Fonction supprimer
-                if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text) || string.IsNullOrWhiteSpace(txtMail.Text) || string.IsNullOrWhiteSpace(txtTel.Text))
-                {
-                    MessageBox.Show("Le nom et le prénom sont obligatoires.");
-                    return;
-                }
-
-                try
-                {
-                    // Vérifie qu'au moins une ligne est sélectionnée
-                    if (dgvPersonnel.SelectedRows.Count == 0)
-                    {
-                        MessageBox.Show("Veuillez sélectionner un personnel.");
-                        return;
-                    }
-
-                    DataGridViewRow row = dgvPersonnel.SelectedRows[0];
-
-                    if (row.Cells["Id"].Value == null || !int.TryParse(row.Cells["Id"].Value.ToString(), out int id))
-                    {
-                        MessageBox.Show("ID invalide.");
-                        return;
-                    }
-
                     string nom = txtNom.Text;
                     string prenom = txtPrenom.Text;
                     string tel = txtTel.Text;
                     string mail = txtMail.Text;
                     int idService = (int)comboService.SelectedValue;
 
-                    controller.ModifierPersonnel(id, nom, prenom, tel, mail, idService);
-                    MessageBox.Show("Modification réussie !");
-                    Raffraichir();
+                    if (!string.IsNullOrWhiteSpace(nom) && !string.IsNullOrWhiteSpace(prenom))
+                    {
+                        try
+                        {
+                            controller.AjouterPersonnel(nom, prenom, tel, mail, idService);
+                            MessageBox.Show("Personnel ajouté avec succès !");
+                            RemplirPersonnel();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erreur lors de l'ajout : " + ex.Message);
+                            dgvPersonnel.Columns.Clear();
+                            dgvPersonnel.DataSource = null;
+                            dgvPersonnel.AutoGenerateColumns = true;
+                        }
 
-                    // Réinitialise les champs texte
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nom et prénom sont obligatoires.");
+                    }
+                    Raffraichir();
                     txtNom.Text = "";
                     txtPrenom.Text = "";
                     txtTel.Text = "";
@@ -292,14 +229,63 @@ namespace Mediatek86.view
                     boutonSelection = "";
                     btnValider.Enabled = false;
                 }
-                catch (Exception ex)
+            }
+            else if (boutonSelection == "modifier")
                 {
-                    MessageBox.Show("Erreur lors de la modification : " + ex.Message);
+                if (MessageBox.Show("Modifier ce personnel?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    // Vérifie que le nom et prénom ne sont pas vides - Fonction supprimer
+                    if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text) || string.IsNullOrWhiteSpace(txtMail.Text) || string.IsNullOrWhiteSpace(txtTel.Text))
+
+                    {
+                        MessageBox.Show("Le nom et le prénom sont obligatoires.");
+                        return;
+                    }
+
+                    try
+                    {
+                        // Vérifie qu'au moins une ligne est sélectionnée
+                        if (dgvPersonnel.SelectedRows.Count == 0)
+                        {
+                            MessageBox.Show("Veuillez sélectionner un personnel.");
+                            return;
+                        }
+
+                        DataGridViewRow row = dgvPersonnel.SelectedRows[0];
+
+                        if (row.Cells["Id"].Value == null || !int.TryParse(row.Cells["Id"].Value.ToString(), out int id))
+                        {
+                            MessageBox.Show("ID invalide.");
+                            return;
+                        }
+
+                        string nom = txtNom.Text;
+                        string prenom = txtPrenom.Text;
+                        string tel = txtTel.Text;
+                        string mail = txtMail.Text;
+                        int idService = (int)comboService.SelectedValue;
+
+                        controller.ModifierPersonnel(id, nom, prenom, tel, mail, idService);
+                        MessageBox.Show("Modification réussie !");
+                        Raffraichir();
+
+                        // Réinitialise les champs texte
+                        txtNom.Text = "";
+                        txtPrenom.Text = "";
+                        txtTel.Text = "";
+                        txtMail.Text = "";
+                        boutonSelection = "";
+                        btnValider.Enabled = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erreur lors de la modification : " + ex.Message);
+                    }
                 }
             }
             else if (boutonSelection == "")
             { 
-            if (txtNom.Enabled == false)
+                if (txtNom.Enabled == false)
                 {
                     btnValider.Enabled = false;
                 }
@@ -312,6 +298,7 @@ namespace Mediatek86.view
                     MessageBox.Show("Veuillez selectionner un membre du personnel");
                     return;
                 }
+                
 
                 try
                 {
@@ -329,24 +316,27 @@ namespace Mediatek86.view
                         MessageBox.Show("ID invalide.");
                         return;
                     }
+                    
+                    if (MessageBox.Show("Voulez vous vraiment supprimer ce personnel?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string nom = txtNom.Text;
+                        string prenom = txtPrenom.Text;
+                        string tel = txtTel.Text;
+                        string mail = txtMail.Text;
+                        int idService = (int)comboService.SelectedValue;
 
-                    string nom = txtNom.Text;
-                    string prenom = txtPrenom.Text;
-                    string tel = txtTel.Text;
-                    string mail = txtMail.Text;
-                    int idService = (int)comboService.SelectedValue;
+                        controller.SupprimerPersonnel(id, nom, prenom, tel, mail, idService);
+                        MessageBox.Show("Supression réussie !");
+                        Raffraichir();
 
-                    controller.SupprimerPersonnel(id, nom, prenom, tel, mail, idService);
-                    MessageBox.Show("Modification réussie !");
-                    Raffraichir();
-
-                    // Réinitialise les champs texte
-                    txtNom.Text = "";
-                    txtPrenom.Text = "";
-                    txtTel.Text = "";
-                    txtMail.Text = "";
-                    boutonSelection = "";
-                    btnValider.Enabled = false;
+                        // Réinitialise les champs texte
+                        txtNom.Text = "";
+                        txtPrenom.Text = "";
+                        txtTel.Text = "";
+                        txtMail.Text = "";
+                        boutonSelection = "";
+                        btnValider.Enabled = false;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -366,29 +356,32 @@ namespace Mediatek86.view
 
         private void dgvPersonnel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (dgvPersonnel.CurrentRow != null)
+            if (tabSelection == "Personnel")
             {
-                DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
-
-                txtNom.Text = selectedRow.Cells["Nom"].Value.ToString();
-                txtPrenom.Text = selectedRow.Cells["Prenom"].Value.ToString();
-                txtTel.Text = selectedRow.Cells["Tel"].Value.ToString();
-                txtMail.Text = selectedRow.Cells["Mail"].Value.ToString();
-
-                string serviceNom = selectedRow.Cells["LibelleService"].Value.ToString();
-
-                // Parcours des items pour sélectionner celui dont le texte correspond
-                for (int i = 0; i < comboService.Items.Count; i++)
+                if (dgvPersonnel.CurrentRow != null)
                 {
-                    var item = (ServiceInfo)comboService.Items[i];
-                    if (item.Libelle == serviceNom)
+                    DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
+
+                    txtNom.Text = selectedRow.Cells["Nom"].Value.ToString();
+                    txtPrenom.Text = selectedRow.Cells["Prenom"].Value.ToString();
+                    txtTel.Text = selectedRow.Cells["Tel"].Value.ToString();
+                    txtMail.Text = selectedRow.Cells["Mail"].Value.ToString();
+
+                    string serviceNom = selectedRow.Cells["Service"].Value.ToString();
+
+                    // Parcours des items pour sélectionner celui dont le texte correspond
+                    for (int i = 0; i < comboService.Items.Count; i++)
                     {
-                        comboService.SelectedIndex = i;
-                        break;
+                        var item = (ServiceInfo)comboService.Items[i];
+                        if (item.Libelle == serviceNom)
+                        {
+                            comboService.SelectedIndex = i;
+                            break;
+                        }
                     }
                 }
+                Surligner();
             }
-            Surligner();
         }
 
         private void dgvPersonnel_Click(object sender, EventArgs e)
@@ -423,6 +416,18 @@ namespace Mediatek86.view
             boutonSelection = "supprimer";
             DesactiverBoutons();
             btnValider.Enabled = true;
+
+            if (dgvPersonnel.CurrentRow == null)
+            {
+                MessageBox.Show("Veuillez selectionner une ligne.");
+                return;
+            }
+            DataGridViewRow Row = dgvPersonnel.CurrentRow;
+            txtNom.Text = Row.Cells["Nom"].Value.ToString();
+            txtPrenom.Text = Row.Cells["Prenom"].Value.ToString();
+            txtTel.Text = Row.Cells["Tel"].Value.ToString();
+            txtMail.Text = Row.Cells["Mail"].Value.ToString();
+
         }
 
         private void tabPerso_Click(object sender, EventArgs e)
@@ -432,12 +437,43 @@ namespace Mediatek86.view
 
         /////////////////////////////////////////////////  SCRIPT DE LA PARTIE ABSENCE  /////////////////////////////////////////////////
 
+        private readonly AbsenceController absenceController = new AbsenceController();
+        private void RemplirAbsences()
+        {
+            List<Absence> absences = absenceController.GetAllAbsences();
+            dgvPersonnel.Columns.Clear();
+            dgvPersonnel.DataSource = null;
+            dgvPersonnel.AutoGenerateColumns = true;
+            dgvPersonnel.DataSource = absences;
 
+            dgvPersonnel.Columns[1].HeaderText = "Date de début";
+            dgvPersonnel.Columns[2].HeaderText = "Date de fin";
+        }
 
+        private void tabPersoAbs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabPersoAbs.SelectedIndex == 1)
+            {
+                dgvPersonnel.DataSource = null;
+                dgvPersonnel.Columns.Clear();
+                dgvPersonnel.ClearSelection();
+                tabSelection = "Absences";
+                RemplirAbsences();
+                dgvPersonnel.Columns["Nom"].Width = 120;
+                dgvPersonnel.Columns["DateFin"].Width = 120;
+                dgvPersonnel.Columns["DateDebut"].Width = 120;
+                dgvPersonnel.Columns["Motif"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-
-
-
-
+            }
+            else
+            {
+                dgvPersonnel.DataSource = null;
+                dgvPersonnel.Columns.Clear();
+                dgvPersonnel.ClearSelection();
+                tabSelection = "Personnel";
+                RemplirPersonnel();
+                Raffraichir();
+            }
+        }
     }
 }
