@@ -47,13 +47,13 @@
             this.tabAbsence = new System.Windows.Forms.TabPage();
             this.comboMotif = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkNonDef = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.dateFin = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
             this.dateDebut = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbNomAbsent = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnModifierAbs = new System.Windows.Forms.Button();
             this.btnSupprimerAbs = new System.Windows.Forms.Button();
@@ -236,13 +236,13 @@
             // 
             this.tabAbsence.Controls.Add(this.comboMotif);
             this.tabAbsence.Controls.Add(this.label10);
-            this.tabAbsence.Controls.Add(this.checkBox1);
+            this.tabAbsence.Controls.Add(this.checkNonDef);
             this.tabAbsence.Controls.Add(this.label9);
             this.tabAbsence.Controls.Add(this.dateFin);
             this.tabAbsence.Controls.Add(this.label8);
             this.tabAbsence.Controls.Add(this.dateDebut);
             this.tabAbsence.Controls.Add(this.label7);
-            this.tabAbsence.Controls.Add(this.comboBox1);
+            this.tabAbsence.Controls.Add(this.cbNomAbsent);
             this.tabAbsence.Controls.Add(this.label6);
             this.tabAbsence.Controls.Add(this.btnModifierAbs);
             this.tabAbsence.Controls.Add(this.btnSupprimerAbs);
@@ -277,14 +277,14 @@
             this.label10.TabIndex = 11;
             this.label10.Text = "motif:";
             // 
-            // checkBox1
+            // checkNonDef
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(208, 147);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkNonDef.AutoSize = true;
+            this.checkNonDef.Location = new System.Drawing.Point(208, 147);
+            this.checkNonDef.Name = "checkNonDef";
+            this.checkNonDef.Size = new System.Drawing.Size(15, 14);
+            this.checkNonDef.TabIndex = 10;
+            this.checkNonDef.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -329,13 +329,13 @@
             this.label7.TabIndex = 5;
             this.label7.Text = "date de début:";
             // 
-            // comboBox1
+            // cbNomAbsent
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(67, 39);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(156, 21);
-            this.comboBox1.TabIndex = 4;
+            this.cbNomAbsent.FormattingEnabled = true;
+            this.cbNomAbsent.Location = new System.Drawing.Point(67, 39);
+            this.cbNomAbsent.Name = "cbNomAbsent";
+            this.cbNomAbsent.Size = new System.Drawing.Size(156, 21);
+            this.cbNomAbsent.TabIndex = 4;
             // 
             // label6
             // 
@@ -429,12 +429,12 @@
         private System.Windows.Forms.Button btnSupprimerAbs;
         private System.Windows.Forms.Button bntAjouterAbs;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbNomAbsent;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dateDebut;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkNonDef;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateFin;
         private System.Windows.Forms.ComboBox comboMotif;

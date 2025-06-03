@@ -71,6 +71,7 @@
     <Compile Include="bddmanager\BddManager.cs" />
     <Compile Include="controller\AbsenceController.cs" />
     <Compile Include="controller\Authentification.cs" />
+    <Compile Include="controller\MotifController.cs" />
     <Compile Include="controller\PersonnelController.cs" />
     <Compile Include="dal\Connexion.cs" />
     <Compile Include="dal\Access.cs" />

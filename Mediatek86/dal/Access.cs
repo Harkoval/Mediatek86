@@ -203,5 +203,28 @@ namespace Mediatek86.dal
             return absences;
         }
 
+
+        /// <summary>
+        /// Requête SQL permettant d'obtenir tous les motifs
+        /// </summary>
+        /// <returns></returns>
+        public List<Motif> GetAllMotifs()
+        {
+            string query = @"SELECT m.idmotif, libelle AS motif FROM motif m";
+
+            List<object[]> records = bddManager.ReqSelect(query);
+            List<Motif> motifs = new List<Motif>();
+
+            foreach (object[] row in records)
+            {
+                int idmotif = Convert.ToInt32(row[0]);
+                string motif = row[1].ToString();
+
+                motifs.Add(new Motif(idmotif, motif));
+            }
+
+            return motifs;
+        }
+
     }
 }

@@ -26,6 +26,8 @@ namespace Mediatek86.view
         string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné.
         string tabSelection = "Personnel";
         private readonly PersonnelController controller;
+        private readonly MotifController motifController;
+        
         /// <summary>
         /// Initialisation de la fenêtre de gestion.
         /// </summary>
@@ -33,6 +35,7 @@ namespace Mediatek86.view
         {
             InitializeComponent();
             controller = new PersonnelController();
+            motifController = new MotifController();
             Raffraichir();
         }
 
@@ -448,6 +451,23 @@ namespace Mediatek86.view
 
             dgvPersonnel.Columns[1].HeaderText = "Date de début";
             dgvPersonnel.Columns[2].HeaderText = "Date de fin";
+
+
+            //Combobox des absents
+            cbNomAbsent.DataSource = null;
+            List<Personnel> personnels = controller.GetPersonnels();
+            cbNomAbsent.DataSource = personnels;
+            cbNomAbsent.DisplayMember = "Nom";
+            cbNomAbsent.ValueMember = "Id";
+
+            //Combobox des motifs
+
+            List<Motif> motifs = motifController.GetAllMotifs();
+
+            comboMotif.DataSource = null;
+            comboMotif.DisplayMember = "Libelle";  // Ce qui est affiché
+            comboMotif.ValueMember = "IdMotif";    // Ce que tu récupères
+            comboMotif.DataSource = motifs;
         }
 
         private void tabPersoAbs_SelectedIndexChanged(object sender, EventArgs e)
