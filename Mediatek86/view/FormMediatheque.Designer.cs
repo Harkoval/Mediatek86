@@ -30,6 +30,7 @@
         {
             this.tabPersoAbs = new System.Windows.Forms.TabControl();
             this.tabPerso = new System.Windows.Forms.TabPage();
+            this.btnValider = new System.Windows.Forms.Button();
             this.comboService = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -72,11 +73,12 @@
             this.tabPersoAbs.Multiline = true;
             this.tabPersoAbs.Name = "tabPersoAbs";
             this.tabPersoAbs.SelectedIndex = 0;
-            this.tabPersoAbs.Size = new System.Drawing.Size(258, 265);
+            this.tabPersoAbs.Size = new System.Drawing.Size(258, 301);
             this.tabPersoAbs.TabIndex = 1;
             // 
             // tabPerso
             // 
+            this.tabPerso.Controls.Add(this.btnValider);
             this.tabPerso.Controls.Add(this.comboService);
             this.tabPerso.Controls.Add(this.label5);
             this.tabPerso.Controls.Add(this.label4);
@@ -93,10 +95,20 @@
             this.tabPerso.Location = new System.Drawing.Point(4, 22);
             this.tabPerso.Name = "tabPerso";
             this.tabPerso.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPerso.Size = new System.Drawing.Size(250, 239);
+            this.tabPerso.Size = new System.Drawing.Size(250, 275);
             this.tabPerso.TabIndex = 0;
             this.tabPerso.Text = "personnel";
             this.tabPerso.UseVisualStyleBackColor = true;
+            // 
+            // btnValider
+            // 
+            this.btnValider.Location = new System.Drawing.Point(168, 246);
+            this.btnValider.Name = "btnValider";
+            this.btnValider.Size = new System.Drawing.Size(75, 23);
+            this.btnValider.TabIndex = 14;
+            this.btnValider.Text = "valider";
+            this.btnValider.UseVisualStyleBackColor = true;
+            this.btnValider.Click += new System.EventHandler(this.btnValider_Click);
             // 
             // comboService
             // 
@@ -109,6 +121,7 @@
             this.comboService.Name = "comboService";
             this.comboService.Size = new System.Drawing.Size(157, 21);
             this.comboService.TabIndex = 13;
+            this.comboService.SelectedIndexChanged += new System.EventHandler(this.comboService_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -143,6 +156,7 @@
             this.txtTel.Name = "txtTel";
             this.txtTel.Size = new System.Drawing.Size(156, 20);
             this.txtTel.TabIndex = 8;
+            this.txtTel.TextChanged += new System.EventHandler(this.txtTel_TextChanged);
             // 
             // txtMail
             // 
@@ -150,6 +164,7 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(157, 20);
             this.txtMail.TabIndex = 7;
+            this.txtMail.TextChanged += new System.EventHandler(this.txtMail_TextChanged);
             // 
             // label2
             // 
@@ -175,6 +190,7 @@
             this.txtPrenom.Name = "txtPrenom";
             this.txtPrenom.Size = new System.Drawing.Size(156, 20);
             this.txtPrenom.TabIndex = 4;
+            this.txtPrenom.TextChanged += new System.EventHandler(this.txtPrenom_TextChanged);
             // 
             // txtNom
             // 
@@ -182,6 +198,7 @@
             this.txtNom.Name = "txtNom";
             this.txtNom.Size = new System.Drawing.Size(156, 20);
             this.txtNom.TabIndex = 3;
+            this.txtNom.TextChanged += new System.EventHandler(this.txtNom_TextChanged);
             // 
             // btnSupprimerPerso
             // 
@@ -230,7 +247,7 @@
             this.tabAbsence.Location = new System.Drawing.Point(4, 22);
             this.tabAbsence.Name = "tabAbsence";
             this.tabAbsence.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbsence.Size = new System.Drawing.Size(250, 239);
+            this.tabAbsence.Size = new System.Drawing.Size(250, 275);
             this.tabAbsence.TabIndex = 1;
             this.tabAbsence.Text = "absence";
             this.tabAbsence.UseVisualStyleBackColor = true;
@@ -359,22 +376,25 @@
             this.dgvPersonnel.Location = new System.Drawing.Point(12, 13);
             this.dgvPersonnel.Name = "dgvPersonnel";
             this.dgvPersonnel.ReadOnly = true;
-            this.dgvPersonnel.Size = new System.Drawing.Size(585, 261);
+            this.dgvPersonnel.Size = new System.Drawing.Size(585, 301);
             this.dgvPersonnel.StandardTab = true;
             this.dgvPersonnel.TabIndex = 2;
             this.dgvPersonnel.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonnel_CellClick);
             this.dgvPersonnel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPersonnel_CellContentClick);
+            this.dgvPersonnel.Click += new System.EventHandler(this.dgvPersonnel_Click);
+            this.dgvPersonnel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPersonnel_MouseClick);
             // 
             // FormMediatheque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 302);
+            this.ClientSize = new System.Drawing.Size(878, 326);
             this.Controls.Add(this.dgvPersonnel);
             this.Controls.Add(this.tabPersoAbs);
             this.Name = "FormMediatheque";
             this.Text = "FormMediatheque";
             this.Load += new System.EventHandler(this.FormMediatheque_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FormMediatheque_MouseClick);
             this.tabPersoAbs.ResumeLayout(false);
             this.tabPerso.ResumeLayout(false);
             this.tabPerso.PerformLayout();
@@ -416,5 +436,6 @@
         private System.Windows.Forms.DateTimePicker dateFin;
         private System.Windows.Forms.ComboBox comboMotif;
         private System.Windows.Forms.DataGridView dgvPersonnel;
+        private System.Windows.Forms.Button btnValider;
     }
 }

@@ -56,7 +56,7 @@ namespace Mediatek86.dal
             return personnels;
         }
         /// <summary>
-        /// Permet d'accéder aux services de la base de donnée avec le SQL
+        /// Requête SQL qui permet d'accéder aux services de la base de donnée avec le SQL
         /// </summary>
         /// <returns></returns>
         public List<ServiceInfo> GetAllServices()
@@ -76,7 +76,7 @@ namespace Mediatek86.dal
             return services;
         }
         /// <summary>
-        /// Fonction qui ajoute un personnel quand on appuis sur le bouton magique
+        /// Requête SQL qui ajoute un personnel quand on appuis sur le bouton magique
         /// </summary>
         /// <param name="nom"></param>
         /// <param name="prenom"></param>
@@ -99,6 +99,15 @@ namespace Mediatek86.dal
 
             bddManager.ReqUpdate(query, parameters);
         }
+        /// <summary>
+        /// Requête SQL permettant de Modifier un personnel.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="tel"></param>
+        /// <param name="mail"></param>
+        /// <param name="idService"></param>
         public void ModifierPersonnel(int id, string nom, string prenom, string tel, string mail, int idService)
         {
             string query = @"UPDATE personnel 

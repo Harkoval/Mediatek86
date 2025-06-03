@@ -12,6 +12,9 @@ namespace Mediatek86.model
     /// </summary>
     public class Personnel
     {
+        /// <summary>
+        /// ID du personnel
+        /// </summary>
         public int Id { get; set; }
         /// <summary>
         /// Nom du membre
