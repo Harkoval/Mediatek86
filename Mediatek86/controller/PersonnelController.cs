@@ -31,5 +31,9 @@ namespace Mediatek86.controller
         {
             access.ModifierPersonnel(id, nom, prenom, tel, mail, idService);
         }
+        public void SupprimerPersonnel(int id, string nom, string prenom, string tel, string mail, int idService)
+        {
+            access.SupprimerPersonnel(id, nom, prenom, tel, mail, idService);
+        }
     }
 }

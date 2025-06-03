@@ -21,7 +21,9 @@ namespace Mediatek86.view
     /// </summary>
     public partial class FormMediatheque : Form
     {
-        string boutonSelection = "";
+
+        /////////////////////////////////////////////////  INITIALISATION DE LA FENÊTRE  ////////////////////////////////////////////////
+        string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné.
         private readonly PersonnelController controller;
         /// <summary>
         /// Initialisation de la fenêtre de gestion.
@@ -33,27 +35,7 @@ namespace Mediatek86.view
             Raffraichir();
         }
 
-        /// <summary>
-        /// Fonction qui met à jour les mesures des composants
-        /// </summary>
-        private void Raffraichir()
-        {
-            tabPersoAbs.SelectedIndex = 0;
-            dgvPersonnel.ReadOnly = true;
-            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPersonnel.MultiSelect = false;
-            RemplirPersonnel();
-            dgvPersonnel.AutoGenerateColumns = true;
-            dgvPersonnel.Columns["Nom"].Width = 70;
-            dgvPersonnel.Columns["Prenom"].Width = 75;
-            dgvPersonnel.Columns["Mail"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvPersonnel.Columns["Tel"].Width = 100;
-            this.MinimumSize = new Size(885, this.Height);
-            this.MaximumSize = new Size(885, 9999);
-            dgvPersonnel.Columns["IdService"].Visible = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-        }
+        
         private void RemplirPersonnel()
         {
             List<Personnel> personnels = controller.GetPersonnels();
@@ -64,7 +46,7 @@ namespace Mediatek86.view
             dgvPersonnel.DataSource = personnels;
         }
 
-
+        
         private void FormMediatheque_Load(object sender, EventArgs e)
         {
             
@@ -81,10 +63,36 @@ namespace Mediatek86.view
             txtPrenom.Enabled = false;
             comboService.Enabled = false;
             btnValider.Enabled = false;
+            Raffraichir();
+
+        }
+        /// <summary>
+        /// Fonction qui met à jour les mesures des composants
+        /// </summary>
+        private void Raffraichir()
+        {
+            
+            tabPersoAbs.SelectedIndex = 0;
+            dgvPersonnel.ReadOnly = true;
+            dgvPersonnel.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPersonnel.MultiSelect = false;
+            RemplirPersonnel();
+            dgvPersonnel.AutoGenerateColumns = true;
+            dgvPersonnel.Columns["Nom"].Width = 70;
+            dgvPersonnel.Columns["Prenom"].Width = 75;
+            dgvPersonnel.Columns["Mail"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvPersonnel.Columns["Tel"].Width = 100;
+            this.MinimumSize = new Size(885, this.Height);
+            this.MaximumSize = new Size(885, 9999);
+            dgvPersonnel.Columns["IdService"].Visible = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             dgvPersonnel.Columns["Id"].Visible = false;
 
         }
 
+
+        /////////////////////////////////////////////////  SCRIPT DE LA PARTIE PERSONNEL  ///////////////////////////////////////////////
+        
         private void btnAjouterPerso_Click(object sender, EventArgs e)
         {
             boutonSelection = "ajouter";
@@ -128,31 +136,34 @@ namespace Mediatek86.view
             txtMail.Text = "";
             */
         }
-
-        private void btnModifierPerso_Click(object sender, EventArgs e)
+        private void ActiverBoutons()
         {
-            boutonSelection = "modifier";
-            btnModifierPerso.Focus();
             txtMail.Enabled = true;
             txtNom.Enabled = true;
             txtTel.Enabled = true;
             txtPrenom.Enabled = true;
             comboService.Enabled = true;
-            /*
-            
-            */
         }
-
-        private void dgvPersonnel_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DesactiverBoutons()
         {
-            VerifierChampsEtActiverBoutons();
-            /*txtMail.Enabled = false;
+            txtMail.Enabled = false;
             txtNom.Enabled = false;
             txtTel.Enabled = false;
             txtPrenom.Enabled = false;
             comboService.Enabled = false;
             btnValider.Enabled = false;
-            */
+        }
+
+        private void btnModifierPerso_Click(object sender, EventArgs e)
+        {
+            boutonSelection = "modifier";
+            btnModifierPerso.Focus();
+            ActiverBoutons();
+        }
+
+        private void dgvPersonnel_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            VerifierChampsEtActiverBoutons();
         }
 
         private void dgvPersonnel_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -240,7 +251,7 @@ namespace Mediatek86.view
             else if (boutonSelection == "modifier")
             {
                 // Vérifie que le nom et prénom ne sont pas vides - Fonction supprimer
-                if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text))
+                if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text) || string.IsNullOrWhiteSpace(txtMail.Text) || string.IsNullOrWhiteSpace(txtTel.Text))
                 {
                     MessageBox.Show("Le nom et le prénom sont obligatoires.");
                     return;
@@ -295,7 +306,52 @@ namespace Mediatek86.view
             }
             else if (boutonSelection == "supprimer")
             {
+                // Vérifie que le nom et prénom ne sont pas vides - Fonction supprimer
+                if (string.IsNullOrWhiteSpace(txtNom.Text) || string.IsNullOrWhiteSpace(txtPrenom.Text) || string.IsNullOrWhiteSpace(txtMail.Text) || string.IsNullOrWhiteSpace(txtTel.Text))
+                {
+                    MessageBox.Show("Veuillez selectionner un membre du personnel");
+                    return;
+                }
 
+                try
+                {
+                    // Vérifie qu'au moins une ligne est sélectionnée
+                    if (dgvPersonnel.SelectedRows.Count == 0)
+                    {
+                        MessageBox.Show("Veuillez sélectionner un personnel.");
+                        return;
+                    }
+
+                    DataGridViewRow row = dgvPersonnel.SelectedRows[0];
+
+                    if (row.Cells["Id"].Value == null || !int.TryParse(row.Cells["Id"].Value.ToString(), out int id))
+                    {
+                        MessageBox.Show("ID invalide.");
+                        return;
+                    }
+
+                    string nom = txtNom.Text;
+                    string prenom = txtPrenom.Text;
+                    string tel = txtTel.Text;
+                    string mail = txtMail.Text;
+                    int idService = (int)comboService.SelectedValue;
+
+                    controller.SupprimerPersonnel(id, nom, prenom, tel, mail, idService);
+                    MessageBox.Show("Modification réussie !");
+                    Raffraichir();
+
+                    // Réinitialise les champs texte
+                    txtNom.Text = "";
+                    txtPrenom.Text = "";
+                    txtTel.Text = "";
+                    txtMail.Text = "";
+                    boutonSelection = "";
+                    btnValider.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erreur lors de la modification : " + ex.Message);
+                }
             }
         }
         ///
@@ -347,15 +403,40 @@ namespace Mediatek86.view
             if (boutonSelection == "ajouter")
             {
                 btnAjouterPerso.Focus();
+                ActiverBoutons();
             }
             else if (boutonSelection == "modifier")
             {
                 btnModifierPerso.Focus();
+                ActiverBoutons();
             }
             else if (boutonSelection == "supprimer")
             {
                 btnSupprimerPerso.Focus();
+                DesactiverBoutons();
+                btnValider.Enabled = true;
             }
         }
+
+        private void btnSupprimerPerso_Click(object sender, EventArgs e)
+        {
+            boutonSelection = "supprimer";
+            DesactiverBoutons();
+            btnValider.Enabled = true;
+        }
+
+        private void tabPerso_Click(object sender, EventArgs e)
+        {
+            Surligner();
+        }
+
+        /////////////////////////////////////////////////  SCRIPT DE LA PARTIE ABSENCE  /////////////////////////////////////////////////
+
+
+
+
+
+
+
     }
 }

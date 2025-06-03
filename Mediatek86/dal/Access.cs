@@ -86,7 +86,7 @@ namespace Mediatek86.dal
         public void AjouterPersonnel(string nom, string prenom, string tel, string mail, int idService)
         {
             string query = @"INSERT INTO personnel (nom, prenom, tel, mail, idservice) 
-                                VALUES (@nom, @prenom, @tel, @mail, @idservice)";
+                            VALUES (@nom, @prenom, @tel, @mail, @idservice)";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
@@ -111,18 +111,44 @@ namespace Mediatek86.dal
         public void ModifierPersonnel(int id, string nom, string prenom, string tel, string mail, int idService)
         {
             string query = @"UPDATE personnel 
-                 SET nom = @nom, prenom = @prenom, tel = @tel, mail = @mail, idservice = @idservice 
-                 WHERE idpersonnel = @id";
+                            SET nom = @nom, prenom = @prenom, tel = @tel, mail = @mail, idservice = @idservice 
+                            WHERE idpersonnel = @id";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
-    {
-        { "@id", id },
-        { "@nom", nom },
-        { "@prenom", prenom },
-        { "@tel", tel },
-        { "@mail", mail },
-        { "@idservice", idService }
-    };
+            {
+            { "@id", id },
+            { "@nom", nom },
+            { "@prenom", prenom },
+            { "@tel", tel },
+            { "@mail", mail },
+            { "@idservice", idService }
+            };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
+
+        /// <summary>
+        /// Requête SQL permettant de supprimer un membre
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="tel"></param>
+        /// <param name="mail"></param>
+        /// <param name="idService"></param>
+        public void SupprimerPersonnel(int id, string nom, string prenom, string tel, string mail, int idService)
+        {
+            string query = @"DELETE FROM personnel WHERE idpersonnel = @id";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+            { "@id", id },
+            { "@nom", nom },
+            { "@prenom", prenom },
+            { "@tel", tel },
+            { "@mail", mail },
+            { "@idservice", idService }
+            };
 
             bddManager.ReqUpdate(query, parameters);
         }

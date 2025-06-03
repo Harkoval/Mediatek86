@@ -99,6 +99,7 @@
             this.tabPerso.TabIndex = 0;
             this.tabPerso.Text = "personnel";
             this.tabPerso.UseVisualStyleBackColor = true;
+            this.tabPerso.Click += new System.EventHandler(this.tabPerso_Click);
             // 
             // btnValider
             // 
@@ -208,6 +209,7 @@
             this.btnSupprimerPerso.TabIndex = 2;
             this.btnSupprimerPerso.Text = "supprimer";
             this.btnSupprimerPerso.UseVisualStyleBackColor = true;
+            this.btnSupprimerPerso.Click += new System.EventHandler(this.btnSupprimerPerso_Click);
             // 
             // btnModifierPerso
             // 
