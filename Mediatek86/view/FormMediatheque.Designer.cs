@@ -256,6 +256,7 @@
             this.tabAbsence.TabIndex = 1;
             this.tabAbsence.Text = "absence";
             this.tabAbsence.UseVisualStyleBackColor = true;
+            this.tabAbsence.Click += new System.EventHandler(this.tabAbsence_Click);
             // 
             // cbMotif
             // 

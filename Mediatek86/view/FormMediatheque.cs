@@ -359,6 +359,10 @@ namespace Mediatek86.view
                 }
                 Surligner();
             }
+            else
+            {
+                Surligner();
+            }
             
         }
 
@@ -473,49 +477,70 @@ namespace Mediatek86.view
         /////////////////////////////////////////////////  SCRIPT DE LA PARTIE ABSENCE  /////////////////////////////////////////////////
 
         private readonly AbsenceController absenceController = new AbsenceController();
+
         private void RemplirAbsences()
         {
+            // 1. Récupérer les absences depuis le contrôleur
             List<Absence> absences = absenceController.GetAllAbsences();
+
+            // 2. Réinitialiser et recharger le DataGridView
             dgvPersonnel.Columns.Clear();
             dgvPersonnel.DataSource = null;
             dgvPersonnel.AutoGenerateColumns = true;
             dgvPersonnel.DataSource = absences;
 
-            dgvPersonnel.Columns[1].HeaderText = "Date de début";
-            dgvPersonnel.Columns[2].HeaderText = "Date de fin";
+            // 3. Afficher les noms de colonnes pour vérification
+            foreach (DataGridViewColumn col in dgvPersonnel.Columns)
+            {
+                MessageBox.Show("Nom de colonne : " + col.Name); // Ou Console.WriteLine si en mode console
+            }
 
+            // 4. Cacher la colonne contenant l'ID du personnel si elle existe
+            if (dgvPersonnel.Columns.Contains("IdPersonnel"))
+            {
+                dgvPersonnel.Columns["IdPersonnel"].Visible = false;
+            }
 
-            //Combobox des absents
+            // 5. Mise en forme des entêtes
+            if (dgvPersonnel.Columns.Count >= 3)
+            {
+                dgvPersonnel.Columns[1].HeaderText = "Date de début";
+                dgvPersonnel.Columns[2].HeaderText = "Date de fin";
+            }
+
+            // 6. Combobox des absents
             cbNomAbsent.DataSource = null;
             List<Personnel> personnels = controller.GetPersonnels();
             cbNomAbsent.DataSource = personnels;
             cbNomAbsent.DisplayMember = "Nom";
             cbNomAbsent.ValueMember = "Id";
 
-            //Combobox des motifs
-
+            // 7. Combobox des motifs
             List<Motif> motifs = motifController.GetAllMotifs();
-
             cbMotif.DataSource = null;
-            cbMotif.DisplayMember = "Libelle";  // Ce qui est affiché
-            cbMotif.ValueMember = "IdMotif";    // Ce que tu récupères
+            cbMotif.DisplayMember = "Libelle";
+            cbMotif.ValueMember = "IdMotif";
             cbMotif.DataSource = motifs;
         }
 
+
+        public void RaffraichirAbs()
+        {
+            dgvPersonnel.DataSource = null;
+            dgvPersonnel.Columns.Clear();
+            dgvPersonnel.ClearSelection();
+            tabSelection = "Absences";
+            RemplirAbsences();
+            dgvPersonnel.Columns[0].Width = 120;
+            dgvPersonnel.Columns["DateFin"].Width = 120;
+            dgvPersonnel.Columns["DateDebut"].Width = 120;
+            dgvPersonnel.Columns["Motif"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
         private void tabPersoAbs_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabPersoAbs.SelectedIndex == 1)
             {
-                dgvPersonnel.DataSource = null;
-                dgvPersonnel.Columns.Clear();
-                dgvPersonnel.ClearSelection();
-                tabSelection = "Absences";
-                RemplirAbsences();
-                dgvPersonnel.Columns["Nom"].Width = 120;
-                dgvPersonnel.Columns["DateFin"].Width = 120;
-                dgvPersonnel.Columns["DateDebut"].Width = 120;
-                dgvPersonnel.Columns["Motif"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
+                RaffraichirAbs();
             }
             else
             {
@@ -542,12 +567,11 @@ namespace Mediatek86.view
                 DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
 
                 string nom = selectedRow.Cells["Nom"].Value.ToString();
-                DateTime DateDebut = Convert.ToDateTime(selectedRow.Cells[1].Value);
-                DateTime? DateFin = selectedRow.Cells[2].Value == DBNull.Value
-                    ? (DateTime?)null
-                    : Convert.ToDateTime(selectedRow.Cells[2].Value);
+                DateTime dateDebutValue = Convert.ToDateTime(selectedRow.Cells["DateDebut"].Value);
+                object rawDateFin = selectedRow.Cells["DateFin"].Value;
                 string motif = selectedRow.Cells["Motif"].Value.ToString();
 
+                // Sélectionne le motif correspondant
                 foreach (Motif item in cbMotif.Items)
                 {
                     if (item.Libelle == motif)
@@ -557,6 +581,7 @@ namespace Mediatek86.view
                     }
                 }
 
+                // Sélectionne le personnel correspondant
                 foreach (Personnel p in cbNomAbsent.Items)
                 {
                     if (p.Nom == nom)
@@ -566,16 +591,21 @@ namespace Mediatek86.view
                     }
                 }
 
-                
-                DateTime? valeurFin = selectedRow.Cells[2].Value == DBNull.Value
-                ? (DateTime?)null
-                : Convert.ToDateTime(selectedRow.Cells[2].Value);
+                // Affecte la date de début
+                dateDebut.Value = dateDebutValue;
 
-
-                dateDebut.Value = DateDebut;
-                if (valeurFin != null && valeurFin.Value >= dateFin.MinDate)
+                // Gestion de la date de fin (null ou réelle)
+                if (rawDateFin != DBNull.Value && rawDateFin is DateTime dateFinValue)
                 {
-                    dateFin.Value = valeurFin.Value; // ici dateFin = ton contrôle visuel
+                    // Vérifie si la valeur est dans l'intervalle autorisé par le DateTimePicker
+                    if (dateFinValue >= dateFin.MinDate && dateFinValue <= dateFin.MaxDate)
+                    {
+                        dateFin.Value = dateFinValue;
+                    }
+                    else
+                    {
+                        dateFin.Value = DateTime.Now;
+                    }
                     checkNonDef.Checked = false;
                 }
                 else
@@ -583,7 +613,6 @@ namespace Mediatek86.view
                     dateFin.Value = DateTime.Now;
                     checkNonDef.Checked = true;
                 }
-
             }
 
             Surligner();
@@ -620,43 +649,31 @@ namespace Mediatek86.view
 
         private void btnSupprimerAbs_Click(object sender, EventArgs e)
         {
+            if (dgvPersonnel.CurrentRow == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une ligne.");
+                return;
+            }
+
             DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
 
+            // Récupération des valeurs par colonne
+            int idPersonnel = Convert.ToInt32(selectedRow.Cells["IdPersonnel"].Value);
             string nom = selectedRow.Cells["Nom"].Value.ToString();
-            DateTime DateDebut = Convert.ToDateTime(selectedRow.Cells[1].Value);
-            DateTime? DateFin = selectedRow.Cells[2].Value == DBNull.Value
+            DateTime debutAbs = Convert.ToDateTime(selectedRow.Cells["DateDebut"].Value);
+            DateTime? finAbs = selectedRow.Cells["DateFin"].Value == DBNull.Value
                 ? (DateTime?)null
-                : Convert.ToDateTime(selectedRow.Cells[2].Value);
+                : Convert.ToDateTime(selectedRow.Cells["DateFin"].Value);
+
             string motif = selectedRow.Cells["Motif"].Value.ToString();
 
-            foreach (Motif item in cbMotif.Items)
+            // Préparer les champs
+            cbNomAbsent.SelectedValue = idPersonnel;
+            dateDebut.Value = debutAbs;
+
+            if (finAbs.HasValue && finAbs.Value >= dateFin.MinDate && finAbs.Value <= dateFin.MaxDate)
             {
-                if (item.Libelle == motif)
-                {
-                    cbMotif.SelectedItem = item;
-                    break;
-                }
-            }
-
-            foreach (Personnel p in cbNomAbsent.Items)
-            {
-                if (p.Nom == nom)
-                {
-                    cbNomAbsent.SelectedItem = p;
-                    break;
-                }
-            }
-
-
-            DateTime? valeurFin = selectedRow.Cells[2].Value == DBNull.Value
-            ? (DateTime?)null
-            : Convert.ToDateTime(selectedRow.Cells[2].Value);
-
-
-            dateDebut.Value = DateDebut;
-            if (valeurFin != null && valeurFin.Value >= dateFin.MinDate)
-            {
-                dateFin.Value = valeurFin.Value; // ici dateFin = ton contrôle visuel
+                dateFin.Value = finAbs.Value;
                 checkNonDef.Checked = false;
             }
             else
@@ -664,18 +681,22 @@ namespace Mediatek86.view
                 dateFin.Value = DateTime.Now;
                 checkNonDef.Checked = true;
             }
+            foreach (Motif m in cbMotif.Items)
+            {
+                if (m.Libelle == motif)
+                {
+                    cbMotif.SelectedItem = m;
+                    break;
+                }
+            }
 
             boutonSelectionAbs = "supprimer";
             DesactiverBoutonsAbs();
             btnValiderAbs.Enabled = true;
-
-            if (dgvPersonnel.CurrentRow == null)
-            {
-                MessageBox.Show("Veuillez selectionner une ligne.");
-                return;
-            }
-            
         }
+
+
+
 
         private void btnValiderAbs_Click(object sender, EventArgs e)
         {
@@ -691,7 +712,8 @@ namespace Mediatek86.view
                     {
                         absenceController.AjouterAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
                         MessageBox.Show("Absence ajoutée !");
-                        RemplirAbsences(); // méthode pour mettre à jour ton DGV
+                        RemplirAbsences();
+                        RaffraichirAbs();
                     }
                     catch (Exception ex)
                     {
@@ -705,7 +727,28 @@ namespace Mediatek86.view
             }
             else if (boutonSelectionAbs == "modifier")
             {
+                if (cbNomAbsent.SelectedItem is Personnel personnel && cbMotif.SelectedItem is Motif motif)
+                {
+                    DateTime dateDebutAbs = dateDebut.Value;
+                    DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
+                    int idMotif = motif.IdMotif;
 
+                    try
+                    {
+                        absenceController.ModifierAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
+                        MessageBox.Show("Absence modifiée !");
+                        RemplirAbsences();
+                        RaffraichirAbs();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erreur : " + ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner un nom et un motif.");
+                }
             }
             else if (boutonSelectionAbs == "")
             {
@@ -714,10 +757,31 @@ namespace Mediatek86.view
                     btnValiderAbs.Enabled = false;
                 }
             }
-            else
+            else if (boutonSelectionAbs == "supprimer")
             {
+                if (dgvPersonnel.CurrentRow != null)
+                {
+                    int idPersonnel = Convert.ToInt32(dgvPersonnel.CurrentRow.Cells["IdPersonnel"].Value);
+                    DateTime dateDebutAbs = Convert.ToDateTime(dgvPersonnel.CurrentRow.Cells["DateDebut"].Value);
 
+                    if (MessageBox.Show("Supprimer cette absence ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        absenceController.SupprimerAbsence(idPersonnel, dateDebutAbs);
+                        MessageBox.Show("Absence supprimée !");
+                        RemplirAbsences();
+                        RaffraichirAbs();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner une ligne.");
+                }
             }
+        }
+
+        private void tabAbsence_Click(object sender, EventArgs e)
+        {
+            Surligner();
         }
     }
 }

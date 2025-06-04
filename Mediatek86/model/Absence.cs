@@ -14,10 +14,12 @@ namespace Mediatek86.model
         /// <summary>
         /// Nom du membre absent
         /// </summary>
-        public string Nom { get; set; }
+        public int IdPersonnel { get;}
         /// <summary>
         /// Date de début d'absence
         /// </summary>
+        /// 
+        public string Nom { get; }
         public DateTime DateDebut { get; set; }
         /// <summary>
         /// Date de fin d'absence si l'absence est fini (peut être nullable)
@@ -35,8 +37,9 @@ namespace Mediatek86.model
         /// <param name="dateFin"></param>
         /// <param name="motif"></param>
 
-        public Absence(string nom, DateTime dateDebut, DateTime? dateFin, string motif)
+        public Absence(int idPersonnel, string nom, DateTime dateDebut, DateTime? dateFin, string motif)
         {
+            IdPersonnel = idPersonnel;
             Nom = nom;
             DateDebut = dateDebut;
             DateFin = dateFin;

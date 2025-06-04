@@ -181,11 +181,10 @@ namespace Mediatek86.dal
         public List<Absence> GetAllAbsences()
         {
             string query = @"
-        SELECT p.nom, a.datedebut, a.datefin, m.libelle
+        SELECT p.idpersonnel, p.nom, a.datedebut, a.datefin, m.libelle
         FROM absence a
         JOIN personnel p ON p.idpersonnel = a.idpersonnel
-        JOIN motif m ON m.idmotif = a.idmotif
-        ORDER BY p.nom;
+        JOIN motif m ON m.idmotif = a.idmotif;
     ";
 
             List<object[]> records = bddManager.ReqSelect(query);
@@ -193,11 +192,13 @@ namespace Mediatek86.dal
 
             foreach (object[] row in records)
             {
-                string nom = row[0].ToString();
-                DateTime dateDebut = Convert.ToDateTime(row[1]);
-                DateTime? dateFin = row[2] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row[2]);
-                string motif = row[3].ToString();
-                absences.Add(new Absence(nom, dateDebut, dateFin, motif));
+                int idPersonnel = Convert.ToInt32(row[0]);
+                string nom = row[1].ToString();
+                DateTime dateDebut = Convert.ToDateTime(row[2]);
+                DateTime? dateFin = row[3] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row[3]);
+                string motif = row[4].ToString();
+
+                absences.Add(new Absence(idPersonnel, nom, dateDebut, dateFin, motif));
             }
 
             return absences;
@@ -250,5 +251,39 @@ namespace Mediatek86.dal
             bddManager.ReqUpdate(query, parameters);
         }
 
+
+
+        public void ModifierAbsence(int idPersonnel, DateTime dateDebut, DateTime? dateFin, int idMotif)
+        {
+            string query = @"UPDATE absence 
+                     SET datefin = @datefin, idmotif = @idmotif 
+                     WHERE idpersonnel = @idpersonnel AND datedebut = @datedebut";
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+    {
+        { "@idpersonnel", idPersonnel },
+        { "@datedebut", dateDebut },
+        { "@datefin", dateFin.HasValue ? dateFin.Value : (object)DBNull.Value },
+        { "@idmotif", idMotif }
+    };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
+
+
+        public void SupprimerAbsence(int idPersonnel, DateTime dateDebut)
+        {
+            MessageBox.Show($"Tentative de suppression : id = {idPersonnel}, dateDebut = {dateDebut:yyyy-MM-dd HH:mm:ss}");
+            string query = @"DELETE FROM absence 
+                             WHERE idpersonnel = @idPersonnel 
+                             AND DATE(datedebut) = @dateDebutDateOnly";
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idPersonnel", idPersonnel },
+                { "@dateDebutDateOnly", dateDebut.Date }
+            };
+
+            bddManager.ReqUpdate(query, parameters);
+        }
     }
 }
