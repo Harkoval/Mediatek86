@@ -517,6 +517,9 @@ namespace Mediatek86.view
             cbMotif.DataSource = motifs;
         }
 
+
+
+
         /// <summary>
         /// Fonction pour raffraichir l'affichage des absences et l'adapter correctement.
         /// </summary>
@@ -532,6 +535,9 @@ namespace Mediatek86.view
             dgvPersonnel.Columns["DateDebut"].Width = 120;
             dgvPersonnel.Columns["Motif"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
+
+
+
         private void tabPersoAbs_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabPersoAbs.SelectedIndex == 1)
@@ -615,12 +621,14 @@ namespace Mediatek86.view
         }
 
 
+
         private void ActiverBoutonsAbs()
         {
             cbNomAbsent.Enabled = true;
             dateDebut.Enabled = true;
             dateFin.Enabled = true;
             cbMotif.Enabled = true;
+            checkNonDef.Enabled = true;
         }
         private void DesactiverBoutonsAbs()
         {
@@ -628,6 +636,7 @@ namespace Mediatek86.view
             dateDebut.Enabled = false;
             dateFin.Enabled = false;
             cbMotif.Enabled = false;
+            checkNonDef.Enabled = false;
         }
         private void bntAjouterAbs_Click(object sender, EventArgs e)
         {
@@ -700,20 +709,23 @@ namespace Mediatek86.view
             {
                 if (cbNomAbsent.SelectedItem is Personnel personnel && cbMotif.SelectedItem is Motif motif)
                 {
-                    DateTime dateDebutAbs = dateDebut.Value;
-                    DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
-                    int idMotif = motif.IdMotif;
+                    if (MessageBox.Show("Ajouter cette absence ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        DateTime dateDebutAbs = dateDebut.Value;
+                        DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
+                        int idMotif = motif.IdMotif;
 
-                    try
-                    {
-                        absenceController.AjouterAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
-                        MessageBox.Show("Absence ajoutée !");
-                        RemplirAbsences();
-                        RaffraichirAbs();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Erreur : " + ex.Message);
+                        try
+                        {
+                            absenceController.AjouterAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
+                            MessageBox.Show("Absence ajoutée !");
+                            RemplirAbsences();
+                            RaffraichirAbs();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erreur : " + ex.Message);
+                        }
                     }
                 }
                 else
@@ -725,20 +737,23 @@ namespace Mediatek86.view
             {
                 if (cbNomAbsent.SelectedItem is Personnel personnel && cbMotif.SelectedItem is Motif motif)
                 {
-                    DateTime dateDebutAbs = dateDebut.Value;
-                    DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
-                    int idMotif = motif.IdMotif;
+                    if (MessageBox.Show("Modifier cette absence ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        DateTime dateDebutAbs = dateDebut.Value;
+                        DateTime? dateFinAbs = checkNonDef.Checked ? (DateTime?)null : dateFin.Value;
+                        int idMotif = motif.IdMotif;
 
-                    try
-                    {
-                        absenceController.ModifierAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
-                        MessageBox.Show("Absence modifiée !");
-                        RemplirAbsences();
-                        RaffraichirAbs();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Erreur : " + ex.Message);
+                        try
+                        {
+                            absenceController.ModifierAbsence(personnel.Id, dateDebutAbs, dateFinAbs, idMotif);
+                            MessageBox.Show("Absence modifiée !");
+                            RemplirAbsences();
+                            RaffraichirAbs();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erreur : " + ex.Message);
+                        }
                     }
                 }
                 else
