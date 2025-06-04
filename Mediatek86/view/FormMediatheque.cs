@@ -25,7 +25,7 @@ namespace Mediatek86.view
         /////////////////////////////////////////////////  INITIALISATION DE LA FENÊTRE  ////////////////////////////////////////////////
         string boutonSelection = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné dans Personnel
         string boutonSelectionAbs = ""; /// Valeur pour déterminer quel bouton de Ajouter, Modifier, ou Supprimer est selectionné dans Absent
-        string tabSelection = "Personnel";
+        string tabSelection = "Personnel";/// Valeur pour déterminer si l'on se trouve sur la page d'éditeur du personnel ou du service
         private readonly PersonnelController controller;
         private readonly MotifController motifController;
         
@@ -68,14 +68,6 @@ namespace Mediatek86.view
             txtPrenom.Enabled = false;
             comboService.Enabled = false;
             btnValider.Enabled = false;
-            /*
-            DataGridViewRow selectedRow = dgvPersonnel.CurrentRow;
-            txtNom.Text = selectedRow.Cells["Nom"].Value.ToString();
-            txtPrenom.Text = selectedRow.Cells["Prenom"].Value.ToString();
-            txtTel.Text = selectedRow.Cells["Tel"].Value.ToString();
-            txtMail.Text = selectedRow.Cells["Mail"].Value.ToString();
-            string serviceNom = selectedRow.Cells["Service"].Value.ToString();
-            */
             dgvPersonnel.Rows[0].Selected = true;
             Raffraichir();
 
@@ -366,6 +358,12 @@ namespace Mediatek86.view
             
         }
 
+        /// <summary>
+        /// Quand un click est réalisé dans la liste(Data Grid Viewer), les zones d'information de 
+        /// l'éditeur se définissent par la ligne selectionnée!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvPersonnel_MouseClick(object sender, MouseEventArgs e)
         {
             if (tabSelection == "Personnel")
@@ -476,7 +474,7 @@ namespace Mediatek86.view
 
         /////////////////////////////////////////////////  SCRIPT DE LA PARTIE ABSENCE  /////////////////////////////////////////////////
 
-        private readonly AbsenceController absenceController = new AbsenceController();
+        private readonly AbsenceController absenceController = new AbsenceController(); // Créé une instance de AbsenceController pour l'utiliser
 
         private void RemplirAbsences()
         {
@@ -490,10 +488,6 @@ namespace Mediatek86.view
             dgvPersonnel.DataSource = absences;
 
             // 3. Afficher les noms de colonnes pour vérification
-            foreach (DataGridViewColumn col in dgvPersonnel.Columns)
-            {
-                MessageBox.Show("Nom de colonne : " + col.Name); // Ou Console.WriteLine si en mode console
-            }
 
             // 4. Cacher la colonne contenant l'ID du personnel si elle existe
             if (dgvPersonnel.Columns.Contains("IdPersonnel"))
@@ -523,7 +517,9 @@ namespace Mediatek86.view
             cbMotif.DataSource = motifs;
         }
 
-
+        /// <summary>
+        /// Fonction pour raffraichir l'affichage des absences et l'adapter correctement.
+        /// </summary>
         public void RaffraichirAbs()
         {
             dgvPersonnel.DataSource = null;

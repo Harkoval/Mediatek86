@@ -12,14 +12,17 @@ namespace Mediatek86.model
     public class Absence
     {
         /// <summary>
-        /// Nom du membre absent
+        /// ID du membre absent
         /// </summary>
         public int IdPersonnel { get;}
         /// <summary>
-        /// Date de début d'absence
+        /// Nom du membre absent
         /// </summary>
         /// 
         public string Nom { get; }
+        /// <summary>
+        /// Date de début d'absence
+        /// </summary>
         public DateTime DateDebut { get; set; }
         /// <summary>
         /// Date de fin d'absence si l'absence est fini (peut être nullable)
@@ -29,14 +32,15 @@ namespace Mediatek86.model
         /// Motif de l'absence
         /// </summary>
         public string Motif { get; set; }
+
         /// <summary>
         /// Infos sur l'absence
         /// </summary>
+        /// <param name="idPersonnel"></param>
         /// <param name="nom"></param>
         /// <param name="dateDebut"></param>
         /// <param name="dateFin"></param>
         /// <param name="motif"></param>
-
         public Absence(int idPersonnel, string nom, DateTime dateDebut, DateTime? dateFin, string motif)
         {
             IdPersonnel = idPersonnel;

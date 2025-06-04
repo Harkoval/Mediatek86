@@ -58,7 +58,7 @@ namespace Mediatek86.model
             Nom = nom;
             Prenom = prenom;
             Tel = tel;
-            IdService = idservice.ToString(); // si tu veux rester en string
+            IdService = idservice.ToString();
             Mail = mail;
             Service = service;
         }

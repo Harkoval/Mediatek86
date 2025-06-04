@@ -252,7 +252,13 @@ namespace Mediatek86.dal
         }
 
 
-
+        /// <summary>
+        /// Requête SQL pour modifier une absence
+        /// </summary>
+        /// <param name="idPersonnel"></param>
+        /// <param name="dateDebut"></param>
+        /// <param name="dateFin"></param>
+        /// <param name="idMotif"></param>
         public void ModifierAbsence(int idPersonnel, DateTime dateDebut, DateTime? dateFin, int idMotif)
         {
             string query = @"UPDATE absence 
@@ -270,10 +276,13 @@ namespace Mediatek86.dal
             bddManager.ReqUpdate(query, parameters);
         }
 
-
+        /// <summary>
+        /// Requête SQL pour supprimer une absence
+        /// </summary>
+        /// <param name="idPersonnel"></param>
+        /// <param name="dateDebut"></param>
         public void SupprimerAbsence(int idPersonnel, DateTime dateDebut)
         {
-            MessageBox.Show($"Tentative de suppression : id = {idPersonnel}, dateDebut = {dateDebut:yyyy-MM-dd HH:mm:ss}");
             string query = @"DELETE FROM absence 
                              WHERE idpersonnel = @idPersonnel 
                              AND DATE(datedebut) = @dateDebutDateOnly";

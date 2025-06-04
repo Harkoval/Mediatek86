@@ -42,18 +42,6 @@ namespace Mediatek86.bddmanager
             return instance;
         }
 
-        /*
-        /// <summary>
-        /// Exécution d'une requête de type begin transaction, commit, rollback
-        /// </summary>
-        /// <param name="stringQuery">requête</param>
-        public void ReqControle(string stringQuery)
-        {
-            MySqlCommand command = new MySqlCommand(stringQuery, connection);
-            command.ExecuteNonQuery();
-        }
-        */
-
         /// <summary>
         /// Exécution d'une requête de type insert, update, delete
         /// </summary>
