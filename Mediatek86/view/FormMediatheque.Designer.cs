@@ -45,6 +45,7 @@
             this.btnModifierPerso = new System.Windows.Forms.Button();
             this.btnAjouterPerso = new System.Windows.Forms.Button();
             this.tabAbsence = new System.Windows.Forms.TabPage();
+            this.btnValiderAbs = new System.Windows.Forms.Button();
             this.cbMotif = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.checkNonDef = new System.Windows.Forms.CheckBox();
@@ -59,7 +60,6 @@
             this.btnSupprimerAbs = new System.Windows.Forms.Button();
             this.bntAjouterAbs = new System.Windows.Forms.Button();
             this.dgvPersonnel = new System.Windows.Forms.DataGridView();
-            this.btnValiderAbs = new System.Windows.Forms.Button();
             this.tabPersoAbs.SuspendLayout();
             this.tabPerso.SuspendLayout();
             this.tabAbsence.SuspendLayout();
@@ -258,6 +258,16 @@
             this.tabAbsence.UseVisualStyleBackColor = true;
             this.tabAbsence.Click += new System.EventHandler(this.tabAbsence_Click);
             // 
+            // btnValiderAbs
+            // 
+            this.btnValiderAbs.Location = new System.Drawing.Point(169, 246);
+            this.btnValiderAbs.Name = "btnValiderAbs";
+            this.btnValiderAbs.Size = new System.Drawing.Size(75, 23);
+            this.btnValiderAbs.TabIndex = 13;
+            this.btnValiderAbs.Text = "valider";
+            this.btnValiderAbs.UseVisualStyleBackColor = true;
+            this.btnValiderAbs.Click += new System.EventHandler(this.btnValiderAbs_Click);
+            // 
             // cbMotif
             // 
             this.cbMotif.AutoCompleteCustomSource.AddRange(new string[] {
@@ -393,16 +403,6 @@
             this.dgvPersonnel.Click += new System.EventHandler(this.dgvPersonnel_Click);
             this.dgvPersonnel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPersonnel_MouseClick);
             // 
-            // btnValiderAbs
-            // 
-            this.btnValiderAbs.Location = new System.Drawing.Point(169, 246);
-            this.btnValiderAbs.Name = "btnValiderAbs";
-            this.btnValiderAbs.Size = new System.Drawing.Size(75, 23);
-            this.btnValiderAbs.TabIndex = 13;
-            this.btnValiderAbs.Text = "valider";
-            this.btnValiderAbs.UseVisualStyleBackColor = true;
-            this.btnValiderAbs.Click += new System.EventHandler(this.btnValiderAbs_Click);
-            // 
             // FormMediatheque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -411,7 +411,7 @@
             this.Controls.Add(this.dgvPersonnel);
             this.Controls.Add(this.tabPersoAbs);
             this.Name = "FormMediatheque";
-            this.Text = "FormMediatheque";
+            this.Text = "Mediatek86";
             this.Load += new System.EventHandler(this.FormMediatheque_Load);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FormMediatheque_MouseClick);
             this.tabPersoAbs.ResumeLayout(false);

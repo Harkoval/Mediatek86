@@ -94,7 +94,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConnect);
             this.Name = "FormAuthentification";
-            this.Text = "Form1";
+            this.Text = "Autentification";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
